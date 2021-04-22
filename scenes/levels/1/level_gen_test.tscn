@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/structures/mainframe.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/logistics/navigation.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/levels/pieces/test.tscn" type="PackedScene" id=8]
+
+[node name="level" type="Node2D"]
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="navigation" parent="World" instance=ExtResource( 2 )]
+
+[node name="lines" type="Node2D" parent="World"]
+
+[node name="shade" type="Node2D" parent="World"]
+
+[node name="collision" type="Node2D" parent="World"]
+
+[node name="structures" type="Node2D" parent="World"]
+
+[node name="player_mainframe" parent="World/structures" instance=ExtResource( 1 )]
+team = "Player"
+
+[node name="ai_mainframe" parent="World/structures" instance=ExtResource( 1 )]
+team = "AI"
+
+[node name="sectors" type="Node2D" parent="World"]
+
+[node name="test" parent="." instance=ExtResource( 8 )]

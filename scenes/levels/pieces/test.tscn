@@ -1,0 +1,792 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/levels/pieces/dummy_room.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/levels/pieces/test.gd" type="Script" id=2]
+[ext_resource path="res://scenes/levels/pieces/room.tscn" type="PackedScene" id=3]
+
+[node name="test" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="grid" type="Node2D" parent="."]
+
+[node name="1" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 1231.65, 1146.22 )
+
+[node name="2" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 3231.65, 1146.22 )
+
+[node name="3" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 5231.65, 1146.22 )
+
+[node name="4" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 7231.65, 1146.22 )
+
+[node name="5" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 9231.65, 1146.22 )
+
+[node name="6" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 11231.7, 1146.22 )
+
+[node name="7" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 13231.7, 1146.22 )
+
+[node name="8" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 15231.7, 1146.22 )
+
+[node name="9" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 1231.65, 3146.22 )
+
+[node name="10" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 3231.65, 3146.22 )
+
+[node name="11" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 5231.65, 3146.22 )
+
+[node name="12" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 7231.65, 3146.22 )
+
+[node name="13" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 9231.65, 3146.22 )
+
+[node name="14" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 11231.7, 3146.22 )
+
+[node name="15" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 13231.7, 3146.22 )
+
+[node name="16" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 15231.7, 3146.22 )
+
+[node name="17" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 1231.65, 5146.22 )
+
+[node name="18" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 3231.65, 5146.22 )
+
+[node name="19" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 5231.65, 5146.22 )
+
+[node name="20" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 7231.65, 5146.22 )
+
+[node name="21" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 9231.65, 5146.22 )
+
+[node name="22" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 11231.7, 5146.22 )
+
+[node name="23" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 13231.7, 5146.22 )
+
+[node name="24" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 15231.7, 5146.22 )
+
+[node name="25" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 1231.65, 7146.22 )
+
+[node name="26" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 3231.65, 7146.22 )
+
+[node name="27" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 5231.65, 7146.22 )
+
+[node name="28" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 7231.65, 7146.22 )
+
+[node name="29" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 9231.65, 7146.22 )
+
+[node name="30" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 11231.7, 7146.22 )
+
+[node name="31" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 13231.7, 7146.22 )
+
+[node name="32" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 15231.7, 7146.22 )
+
+[node name="33" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 1231.65, 9146.22 )
+
+[node name="34" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 3231.65, 9146.22 )
+
+[node name="35" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 5231.65, 9146.22 )
+
+[node name="36" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 7231.65, 9146.22 )
+
+[node name="37" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 9231.65, 9146.22 )
+
+[node name="38" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 11231.7, 9146.22 )
+
+[node name="39" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 13231.7, 9146.22 )
+
+[node name="40" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 15231.7, 9146.22 )
+
+[node name="41" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 1231.65, 11146.2 )
+
+[node name="42" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 3231.65, 11146.2 )
+
+[node name="43" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 5231.65, 11146.2 )
+
+[node name="44" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 7231.65, 11146.2 )
+
+[node name="45" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 9231.65, 11146.2 )
+
+[node name="46" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 11231.7, 11146.2 )
+
+[node name="47" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 13231.7, 11146.2 )
+
+[node name="48" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 15231.7, 11146.2 )
+
+[node name="49" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 1231.65, 13146.2 )
+
+[node name="50" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 3231.65, 13146.2 )
+
+[node name="51" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 5231.65, 13146.2 )
+
+[node name="52" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 7231.65, 13146.2 )
+
+[node name="53" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 9231.65, 13146.2 )
+
+[node name="54" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 11231.7, 13146.2 )
+
+[node name="55" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 13231.7, 13146.2 )
+
+[node name="56" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 15231.7, 13146.2 )
+
+[node name="57" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 1231.65, 15146.2 )
+
+[node name="58" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 3231.65, 15146.2 )
+
+[node name="59" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 5231.65, 15146.2 )
+
+[node name="60" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 7231.65, 15146.2 )
+
+[node name="61" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 9231.65, 15146.2 )
+
+[node name="62" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 11231.7, 15146.2 )
+
+[node name="63" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 13231.7, 15146.2 )
+
+[node name="64" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 15231.7, 15146.2 )
+
+[node name="65" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 17231.7, 1146.22 )
+
+[node name="66" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 19231.7, 1146.22 )
+
+[node name="67" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 21231.7, 1146.22 )
+
+[node name="68" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 23231.7, 1146.22 )
+
+[node name="69" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 25231.7, 1146.22 )
+
+[node name="70" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 27231.7, 1146.22 )
+
+[node name="71" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 29231.7, 1146.22 )
+
+[node name="72" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 31231.7, 1146.22 )
+
+[node name="73" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 17231.7, 3146.22 )
+
+[node name="74" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 19231.7, 3146.22 )
+
+[node name="75" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 21231.7, 3146.22 )
+
+[node name="76" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 23231.7, 3146.22 )
+
+[node name="77" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 25231.7, 3146.22 )
+
+[node name="78" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 27231.7, 3146.22 )
+
+[node name="79" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 29231.7, 3146.22 )
+
+[node name="80" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 31231.7, 3146.22 )
+
+[node name="81" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 17231.7, 5146.22 )
+
+[node name="82" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 19231.7, 5146.22 )
+
+[node name="83" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 21231.7, 5146.22 )
+
+[node name="84" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 23231.7, 5146.22 )
+
+[node name="85" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 25231.7, 5146.22 )
+
+[node name="86" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 27231.7, 5146.22 )
+
+[node name="87" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 29231.7, 5146.22 )
+
+[node name="88" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 31231.7, 5146.22 )
+
+[node name="89" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 17231.7, 7146.22 )
+
+[node name="90" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 19231.7, 7146.22 )
+
+[node name="91" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 21231.7, 7146.22 )
+
+[node name="92" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 23231.7, 7146.22 )
+
+[node name="93" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 25231.7, 7146.22 )
+
+[node name="94" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 27231.7, 7146.22 )
+
+[node name="95" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 29231.7, 7146.22 )
+
+[node name="96" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 31231.7, 7146.22 )
+
+[node name="97" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 17231.7, 9146.22 )
+
+[node name="98" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 19231.7, 9146.22 )
+
+[node name="99" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 21231.7, 9146.22 )
+
+[node name="100" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 23231.7, 9146.22 )
+
+[node name="101" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 25231.7, 9146.22 )
+
+[node name="102" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 27231.7, 9146.22 )
+
+[node name="103" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 29231.7, 9146.22 )
+
+[node name="104" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 31231.7, 9146.22 )
+
+[node name="105" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 17231.7, 11146.2 )
+
+[node name="106" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 19231.7, 11146.2 )
+
+[node name="107" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 21231.7, 11146.2 )
+
+[node name="108" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 23231.7, 11146.2 )
+
+[node name="109" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 25231.7, 11146.2 )
+
+[node name="110" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 27231.7, 11146.2 )
+
+[node name="111" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 29231.7, 11146.2 )
+
+[node name="112" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 31231.7, 11146.2 )
+
+[node name="113" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 17231.7, 13146.2 )
+
+[node name="114" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 19231.7, 13146.2 )
+
+[node name="115" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 21231.7, 13146.2 )
+
+[node name="116" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 23231.7, 13146.2 )
+
+[node name="117" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 25231.7, 13146.2 )
+
+[node name="118" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 27231.7, 13146.2 )
+
+[node name="119" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 29231.7, 13146.2 )
+
+[node name="120" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 31231.7, 13146.2 )
+
+[node name="121" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 17231.7, 15146.2 )
+
+[node name="122" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 19231.7, 15146.2 )
+
+[node name="123" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 21231.7, 15146.2 )
+
+[node name="124" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 23231.7, 15146.2 )
+
+[node name="125" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 25231.7, 15146.2 )
+
+[node name="126" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 27231.7, 15146.2 )
+
+[node name="127" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 29231.7, 15146.2 )
+
+[node name="128" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 31231.7, 15146.2 )
+
+[node name="129" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 1231.65, 17146.2 )
+
+[node name="130" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 3231.65, 17146.2 )
+
+[node name="131" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 5231.65, 17146.2 )
+
+[node name="132" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 7231.65, 17146.2 )
+
+[node name="133" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 9231.65, 17146.2 )
+
+[node name="134" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 11231.7, 17146.2 )
+
+[node name="135" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 13231.7, 17146.2 )
+
+[node name="136" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 15231.7, 17146.2 )
+
+[node name="137" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 1231.65, 19146.2 )
+
+[node name="138" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 3231.65, 19146.2 )
+
+[node name="139" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 5231.65, 19146.2 )
+
+[node name="140" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 7231.65, 19146.2 )
+
+[node name="141" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 9231.65, 19146.2 )
+
+[node name="142" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 11231.7, 19146.2 )
+
+[node name="143" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 13231.7, 19146.2 )
+
+[node name="144" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 15231.7, 19146.2 )
+
+[node name="145" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 1231.65, 21146.2 )
+
+[node name="146" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 3231.65, 21146.2 )
+
+[node name="147" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 5231.65, 21146.2 )
+
+[node name="148" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 7231.65, 21146.2 )
+
+[node name="149" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 9231.65, 21146.2 )
+
+[node name="150" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 11231.7, 21146.2 )
+
+[node name="151" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 13231.7, 21146.2 )
+
+[node name="152" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 15231.7, 21146.2 )
+
+[node name="153" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 1231.65, 23146.2 )
+
+[node name="154" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 3231.65, 23146.2 )
+
+[node name="155" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 5231.65, 23146.2 )
+
+[node name="156" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 7231.65, 23146.2 )
+
+[node name="157" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 9231.65, 23146.2 )
+
+[node name="158" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 11231.7, 23146.2 )
+
+[node name="159" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 13231.7, 23146.2 )
+
+[node name="160" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 15231.7, 23146.2 )
+
+[node name="161" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 1231.65, 25146.2 )
+
+[node name="162" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 3231.65, 25146.2 )
+
+[node name="163" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 5231.65, 25146.2 )
+
+[node name="164" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 7231.65, 25146.2 )
+
+[node name="165" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 9231.65, 25146.2 )
+
+[node name="166" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 11231.7, 25146.2 )
+
+[node name="167" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 13231.7, 25146.2 )
+
+[node name="168" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 15231.7, 25146.2 )
+
+[node name="169" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 1231.65, 27146.2 )
+
+[node name="170" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 3231.65, 27146.2 )
+
+[node name="171" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 5231.65, 27146.2 )
+
+[node name="172" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 7231.65, 27146.2 )
+
+[node name="173" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 9231.65, 27146.2 )
+
+[node name="174" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 11231.7, 27146.2 )
+
+[node name="175" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 13231.7, 27146.2 )
+
+[node name="176" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 15231.7, 27146.2 )
+
+[node name="177" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 1231.65, 29146.2 )
+
+[node name="178" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 3231.65, 29146.2 )
+
+[node name="179" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 5231.65, 29146.2 )
+
+[node name="180" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 7231.65, 29146.2 )
+
+[node name="181" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 9231.65, 29146.2 )
+
+[node name="182" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 11231.7, 29146.2 )
+
+[node name="183" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 13231.7, 29146.2 )
+
+[node name="184" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 15231.7, 29146.2 )
+
+[node name="185" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 1231.65, 31146.2 )
+
+[node name="186" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 3231.65, 31146.2 )
+
+[node name="187" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 5231.65, 31146.2 )
+
+[node name="188" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 7231.65, 31146.2 )
+
+[node name="189" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 9231.65, 31146.2 )
+
+[node name="190" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 11231.7, 31146.2 )
+
+[node name="191" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 13231.7, 31146.2 )
+
+[node name="192" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 15231.7, 31146.2 )
+
+[node name="193" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 17231.7, 17146.2 )
+
+[node name="194" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 19231.7, 17146.2 )
+
+[node name="195" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 21231.7, 17146.2 )
+
+[node name="196" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 23231.7, 17146.2 )
+
+[node name="197" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 25231.7, 17146.2 )
+
+[node name="198" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 27231.7, 17146.2 )
+
+[node name="199" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 29231.7, 17146.2 )
+
+[node name="200" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 31231.7, 17146.2 )
+
+[node name="201" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 17231.7, 19146.2 )
+
+[node name="202" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 19231.7, 19146.2 )
+
+[node name="203" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 21231.7, 19146.2 )
+
+[node name="204" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 23231.7, 19146.2 )
+
+[node name="205" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 25231.7, 19146.2 )
+
+[node name="206" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 27231.7, 19146.2 )
+
+[node name="207" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 29231.7, 19146.2 )
+
+[node name="208" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 31231.7, 19146.2 )
+
+[node name="209" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 17231.7, 21146.2 )
+
+[node name="210" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 19231.7, 21146.2 )
+
+[node name="211" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 21231.7, 21146.2 )
+
+[node name="212" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 23231.7, 21146.2 )
+
+[node name="213" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 25231.7, 21146.2 )
+
+[node name="214" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 27231.7, 21146.2 )
+
+[node name="215" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 29231.7, 21146.2 )
+
+[node name="216" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 31231.7, 21146.2 )
+
+[node name="217" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 17231.7, 23146.2 )
+
+[node name="218" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 19231.7, 23146.2 )
+
+[node name="219" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 21231.7, 23146.2 )
+
+[node name="220" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 23231.7, 23146.2 )
+
+[node name="221" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 25231.7, 23146.2 )
+
+[node name="222" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 27231.7, 23146.2 )
+
+[node name="223" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 29231.7, 23146.2 )
+
+[node name="224" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 31231.7, 23146.2 )
+
+[node name="225" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 17231.7, 25146.2 )
+
+[node name="226" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 19231.7, 25146.2 )
+
+[node name="227" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 21231.7, 25146.2 )
+
+[node name="228" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 23231.7, 25146.2 )
+
+[node name="229" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 25231.7, 25146.2 )
+
+[node name="230" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 27231.7, 25146.2 )
+
+[node name="231" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 29231.7, 25146.2 )
+
+[node name="232" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 31231.7, 25146.2 )
+
+[node name="233" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 17231.7, 27146.2 )
+
+[node name="234" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 19231.7, 27146.2 )
+
+[node name="235" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 21231.7, 27146.2 )
+
+[node name="236" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 23231.7, 27146.2 )
+
+[node name="237" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 25231.7, 27146.2 )
+
+[node name="238" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 27231.7, 27146.2 )
+
+[node name="239" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 29231.7, 27146.2 )
+
+[node name="240" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 31231.7, 27146.2 )
+
+[node name="241" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 17231.7, 29146.2 )
+
+[node name="242" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 19231.7, 29146.2 )
+
+[node name="243" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 21231.7, 29146.2 )
+
+[node name="244" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 23231.7, 29146.2 )
+
+[node name="245" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 25231.7, 29146.2 )
+
+[node name="246" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 27231.7, 29146.2 )
+
+[node name="247" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 29231.7, 29146.2 )
+
+[node name="248" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 31231.7, 29146.2 )
+
+[node name="249" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 17231.7, 31146.2 )
+
+[node name="250" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 19231.7, 31146.2 )
+
+[node name="251" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 21231.7, 31146.2 )
+
+[node name="252" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 23231.7, 31146.2 )
+
+[node name="253" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 25231.7, 31146.2 )
+
+[node name="254" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 27231.7, 31146.2 )
+
+[node name="255" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 29231.7, 31146.2 )
+
+[node name="256" parent="grid" instance=ExtResource( 1 )]
+position = Vector2( 31231.7, 31146.2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 15602.4, 16287.4 )
+current = true
+zoom = Vector2( 30, 30 )
+
+[node name="room" parent="." instance=ExtResource( 3 )]
+visible = false
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

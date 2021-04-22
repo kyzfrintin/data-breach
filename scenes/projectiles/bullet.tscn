@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://audio/sound/zap.wav" type="AudioStream" id=1]
+[ext_resource path="res://scenes/projectiles/bullet.gd" type="Script" id=2]
+[ext_resource path="res://audio/sound/shot.wav" type="AudioStream" id=3]
+[ext_resource path="res://addons/mixing-desk/sound/2d/polysound.gd" type="Script" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 2.0
+
+[node name="bullet" type="Area2D"]
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color( 3, 3, 3, 1 )
+polygon = PoolVector2Array( 0, -2, -2, 0, 0, 2, 2, 0 )
+
+[node name="spawn_sound" type="Node2D" parent="."]
+script = ExtResource( 4 )
+autoplay = true
+volume_range = 4.0
+pitch_range = 0.2
+
+[node name="zap" type="AudioStreamPlayer2D" parent="spawn_sound"]
+stream = ExtResource( 1 )
+bus = "FX"
+
+[node name="shot" type="AudioStreamPlayer2D" parent="spawn_sound"]
+stream = ExtResource( 3 )
+volume_db = -25.0
+pitch_scale = 3.0
+bus = "FX"
+
+[connection signal="body_entered" from="." to="." method="_on_bullet_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

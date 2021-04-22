@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/main_Kick.wav-c6f7e937f81e32ce82435929aa0395fe.sample"
+
+[deps]
+
+source_file="res://audio/music/main_Kick.wav"
+dest_files=[ "res://.import/main_Kick.wav-c6f7e937f81e32ce82435929aa0395fe.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

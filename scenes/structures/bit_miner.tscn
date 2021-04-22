@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/structures/bit_miner.gd" type="Script" id=1]
+
+[sub_resource type="ParticlesMaterial" id=1]
+emission_shape = 2
+emission_box_extents = Vector3( 20, 4, 1 )
+flag_disable_z = true
+direction = Vector3( 0, -10, 0 )
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 23.53
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+
+[node name="bit_miner" type="Node2D"]
+modulate = Color( 1, 1, 1, 0.690196 )
+script = ExtResource( 1 )
+
+[node name="box" type="Polygon2D" parent="."]
+color = Color( 0.0823529, 0.776471, 0.172549, 1 )
+polygon = PoolVector2Array( -10, -10, 0, 0, 10, -10, 20, 0, 0, 0, 20, 10, 10, 10, 0, 0, -10, 10, -20, 10, 0, 0, -20, 0 )
+
+[node name="Particles2D" type="Particles2D" parent="box"]
+amount = 40
+process_material = SubResource( 1 )
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PoolVector2Array( -20, 0, -10, -10, 0, 0, 10, -10, 20, 0, 0, 0, 20, 10, 10, 10, 0, 0, -10, 10, -20, 10, 0, 0, -20, 0 )
+width = 2.0
+default_color = Color( 1, 1, 1, 1 )

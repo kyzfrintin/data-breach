@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/entities/player.gd" type="Script" id=1]
+
+[sub_resource type="CircleShape2D" id=1]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.0705882, 0.878431, 0.109804, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.937255, 0.0705882, 0.0705882, 0.129412 )
+
+[node name="player" type="KinematicBody2D"]
+script = ExtResource( 1 )
+speed = 10
+max_hp = 200.0
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color( 1, 1, 1.1, 1 )
+polygon = PoolVector2Array( 10, 0, -8, -6, -6, 0, -8, 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+margin_left = -8.0
+margin_top = 8.0
+margin_right = 8.0
+margin_bottom = 9.0
+custom_styles/fg = SubResource( 2 )
+custom_styles/bg = SubResource( 3 )
+max_value = 200.0
+value = 200.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="attack_timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="attack_timer" to="." method="_on_attack_timer_timeout"]

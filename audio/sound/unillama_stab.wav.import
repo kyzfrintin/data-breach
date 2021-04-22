@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/unillama_stab.wav-3e51256d063f395c9bd14f2f566132d7.sample"
+
+[deps]
+
+source_file="res://audio/sound/unillama_stab.wav"
+dest_files=[ "res://.import/unillama_stab.wav-3e51256d063f395c9bd14f2f566132d7.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=false
+edit/loop=false
+compress/mode=0

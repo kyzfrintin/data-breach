@@ -1,0 +1,2502 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scenes/entities/units/baseAI.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/entities/units/allies/base_ally.gd" type="Script" id=2]
+[ext_resource path="res://select_lines.png" type="Texture" id=3]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.560606, 1 )
+colors = PoolColorArray( 1, 1, 1, 0, 3, 3, 3, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 0.806818 ), 0.0, 0.730579, 0, 0, Vector2( 0.660634, 0.979545 ), -0.0590908, -0.0590908, 0, 0, Vector2( 1, 0.525 ), -3.89261, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+angular_velocity = 36.3
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 720.0
+angle_random = 1.0
+scale = 1.3
+scale_random = 1.0
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
+
+[node name="base_ally" instance=ExtResource( 1 )]
+input_pickable = true
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" parent="." index="0"]
+visible = false
+
+[node name="combat_tree" parent="." index="1"]
+tree = {
+"connection": [ {
+"from": "inverter",
+"from_port": 0,
+"to": "task2",
+"to_port": 0
+}, {
+"from": "sequence2",
+"from_port": 1,
+"to": "task",
+"to_port": 0
+}, {
+"from": "sequence2",
+"from_port": 2,
+"to": "selector",
+"to_port": 0
+}, {
+"from": "selector",
+"from_port": 0,
+"to": "sequence",
+"to_port": 0
+}, {
+"from": "sequence2",
+"from_port": 0,
+"to": "inverter",
+"to_port": 0
+}, {
+"from": "inverter3",
+"from_port": 0,
+"to": "task21",
+"to_port": 0
+}, {
+"from": "sequence3",
+"from_port": 1,
+"to": "task20",
+"to_port": 0
+}, {
+"from": "sequence3",
+"from_port": 0,
+"to": "task5",
+"to_port": 0
+}, {
+"from": "sequence",
+"from_port": 0,
+"to": "inverter3",
+"to_port": 0
+}, {
+"from": "sequence",
+"from_port": 1,
+"to": "task3",
+"to_port": 0
+}, {
+"from": "sequence3",
+"from_port": 2,
+"to": "task6",
+"to_port": 0
+}, {
+"from": "sequence3",
+"from_port": 3,
+"to": "task7",
+"to_port": 0
+}, {
+"from": "sequence3",
+"from_port": 4,
+"to": "task4",
+"to_port": 0
+}, {
+"from": "selector",
+"from_port": 2,
+"to": "sequence3",
+"to_port": 0
+}, {
+"from": "selector",
+"from_port": 1,
+"to": "sequence4",
+"to_port": 0
+}, {
+"from": "sequence4",
+"from_port": 0,
+"to": "inverter2",
+"to_port": 0
+}, {
+"from": "inverter2",
+"from_port": 0,
+"to": "task8",
+"to_port": 0
+}, {
+"from": "sequence4",
+"from_port": 2,
+"to": "task10",
+"to_port": 0
+}, {
+"from": "sequence4",
+"from_port": 1,
+"to": "task23",
+"to_port": 0
+}, {
+"from": "root",
+"from_port": 0,
+"to": "sequence2",
+"to_port": 0
+} ],
+"nodes": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 220, -240 ),
+"params": [  ],
+"size": Vector2( 351.001, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 20, -240 ),
+"size": Vector2( 126, 55 )
+},
+"name": "inverter",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_has_target",
+"offset": Vector2( 220, -140 ),
+"params": [  ],
+"size": Vector2( 315.001, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 640, -60 ),
+"params": [  ],
+"size": Vector2( 354, 85.0002 ),
+"values": [  ]
+},
+"name": "task21",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 440, 0 ),
+"size": Vector2( 134, 55.0001 )
+},
+"name": "inverter3",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 620, 60 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "target" ]
+},
+"name": "task3",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 220, -20 ),
+"size": Vector2( 138.001, 110 )
+},
+"name": "sequence",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_does_path_reach_target",
+"offset": Vector2( 380, 180 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 404, 112 ),
+"values": [ "target" ]
+},
+"name": "task8",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 220, 220 ),
+"size": Vector2( 134.001, 55 )
+},
+"name": "inverter2",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_see_enemy",
+"offset": Vector2( 260, 300 ),
+"params": [  ],
+"size": Vector2( 354, 85 ),
+"values": [  ]
+},
+"name": "task23",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 260, 400 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "target" ]
+},
+"name": "task10",
+"type": 1
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 40, 260 ),
+"size": Vector2( 146, 137 )
+},
+"name": "sequence4",
+"type": 2
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_follow_path",
+"offset": Vector2( 220, 540 ),
+"params": [  ],
+"size": Vector2( 351.001, 85.0005 ),
+"values": [  ]
+},
+"name": "task5",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_attack",
+"offset": Vector2( 600, 600 ),
+"params": [  ],
+"size": Vector2( 346, 85.0004 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_enemy_in_range",
+"offset": Vector2( 220, 640 ),
+"params": [  ],
+"size": Vector2( 354.001, 85.0001 ),
+"values": [  ]
+},
+"name": "task6",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_see_enemy",
+"offset": Vector2( 600, 700 ),
+"params": [  ],
+"size": Vector2( 351, 85.0001 ),
+"values": [  ]
+},
+"name": "task7",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_attack",
+"offset": Vector2( 220, 740 ),
+"params": [  ],
+"size": Vector2( 351.001, 85.0002 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
+} ],
+"data": {
+"count": 5,
+"offset": Vector2( 40, 620 ),
+"size": Vector2( 146, 191 )
+},
+"name": "sequence3",
+"type": 2
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( -220, 260 ),
+"size": Vector2( 126, 137 )
+},
+"name": "selector",
+"type": 3
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( -440, -60 ),
+"size": Vector2( 146, 137 )
+},
+"name": "sequence2",
+"type": 2
+} ],
+"data": {
+"offset": Vector2( -700, 40 ),
+"size": Vector2( 83, 59.9932 )
+},
+"name": "root",
+"type": 0
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 220, -240 ),
+"params": [  ],
+"size": Vector2( 351.001, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_has_target",
+"offset": Vector2( 220, -140 ),
+"params": [  ],
+"size": Vector2( 315.001, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 220, -240 ),
+"params": [  ],
+"size": Vector2( 351.001, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 20, -240 ),
+"size": Vector2( 126, 55 )
+},
+"name": "inverter",
+"type": 14
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 640, -60 ),
+"params": [  ],
+"size": Vector2( 354, 85.0002 ),
+"values": [  ]
+},
+"name": "task21",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 440, 0 ),
+"size": Vector2( 134, 55.0001 )
+},
+"name": "inverter3",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_attack",
+"offset": Vector2( 220, 740 ),
+"params": [  ],
+"size": Vector2( 351.001, 85.0002 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_follow_path",
+"offset": Vector2( 220, 540 ),
+"params": [  ],
+"size": Vector2( 351.001, 85.0005 ),
+"values": [  ]
+},
+"name": "task5",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_see_enemy",
+"offset": Vector2( 600, 700 ),
+"params": [  ],
+"size": Vector2( 351, 85.0001 ),
+"values": [  ]
+},
+"name": "task7",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_attack",
+"offset": Vector2( 600, 600 ),
+"params": [  ],
+"size": Vector2( 346, 85.0004 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 640, -60 ),
+"params": [  ],
+"size": Vector2( 354, 85.0002 ),
+"values": [  ]
+},
+"name": "task21",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 440, 0 ),
+"size": Vector2( 134, 55.0001 )
+},
+"name": "inverter3",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 620, 60 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "target" ]
+},
+"name": "task3",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 220, -20 ),
+"size": Vector2( 138.001, 110 )
+},
+"name": "sequence",
+"type": 2
+}, {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 640, -60 ),
+"params": [  ],
+"size": Vector2( 354, 85.0002 ),
+"values": [  ]
+},
+"name": "task21",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_does_path_reach_target",
+"offset": Vector2( 380, 180 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 404, 112 ),
+"values": [ "target" ]
+},
+"name": "task8",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 260, 400 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "target" ]
+},
+"name": "task10",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_follow_path",
+"offset": Vector2( 220, 540 ),
+"params": [  ],
+"size": Vector2( 351.001, 85.0005 ),
+"values": [  ]
+},
+"name": "task5",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_attack",
+"offset": Vector2( 600, 600 ),
+"params": [  ],
+"size": Vector2( 346, 85.0004 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_enemy_in_range",
+"offset": Vector2( 220, 640 ),
+"params": [  ],
+"size": Vector2( 354.001, 85.0001 ),
+"values": [  ]
+},
+"name": "task6",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_see_enemy",
+"offset": Vector2( 600, 700 ),
+"params": [  ],
+"size": Vector2( 351, 85.0001 ),
+"values": [  ]
+},
+"name": "task7",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_attack",
+"offset": Vector2( 220, 740 ),
+"params": [  ],
+"size": Vector2( 351.001, 85.0002 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
+} ],
+"data": {
+"count": 5,
+"offset": Vector2( 40, 620 ),
+"size": Vector2( 146, 191 )
+},
+"name": "sequence3",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 640, -60 ),
+"params": [  ],
+"size": Vector2( 354, 85.0002 ),
+"values": [  ]
+},
+"name": "task21",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 440, 0 ),
+"size": Vector2( 134, 55.0001 )
+},
+"name": "inverter3",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 620, 60 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "target" ]
+},
+"name": "task3",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 220, -20 ),
+"size": Vector2( 138.001, 110 )
+},
+"name": "sequence",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_does_path_reach_target",
+"offset": Vector2( 380, 180 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 404, 112 ),
+"values": [ "target" ]
+},
+"name": "task8",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 220, 220 ),
+"size": Vector2( 134.001, 55 )
+},
+"name": "inverter2",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_see_enemy",
+"offset": Vector2( 260, 300 ),
+"params": [  ],
+"size": Vector2( 354, 85 ),
+"values": [  ]
+},
+"name": "task23",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 260, 400 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "target" ]
+},
+"name": "task10",
+"type": 1
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 40, 260 ),
+"size": Vector2( 146, 137 )
+},
+"name": "sequence4",
+"type": 2
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_follow_path",
+"offset": Vector2( 220, 540 ),
+"params": [  ],
+"size": Vector2( 351.001, 85.0005 ),
+"values": [  ]
+},
+"name": "task5",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_attack",
+"offset": Vector2( 600, 600 ),
+"params": [  ],
+"size": Vector2( 346, 85.0004 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_enemy_in_range",
+"offset": Vector2( 220, 640 ),
+"params": [  ],
+"size": Vector2( 354.001, 85.0001 ),
+"values": [  ]
+},
+"name": "task6",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_see_enemy",
+"offset": Vector2( 600, 700 ),
+"params": [  ],
+"size": Vector2( 351, 85.0001 ),
+"values": [  ]
+},
+"name": "task7",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_attack",
+"offset": Vector2( 220, 740 ),
+"params": [  ],
+"size": Vector2( 351.001, 85.0002 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
+} ],
+"data": {
+"count": 5,
+"offset": Vector2( 40, 620 ),
+"size": Vector2( 146, 191 )
+},
+"name": "sequence3",
+"type": 2
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( -220, 260 ),
+"size": Vector2( 126, 137 )
+},
+"name": "selector",
+"type": 3
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 620, 60 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "target" ]
+},
+"name": "task3",
+"type": 1
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_does_path_reach_target",
+"offset": Vector2( 380, 180 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 404, 112 ),
+"values": [ "target" ]
+},
+"name": "task8",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 220, 220 ),
+"size": Vector2( 134.001, 55 )
+},
+"name": "inverter2",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_see_enemy",
+"offset": Vector2( 260, 300 ),
+"params": [  ],
+"size": Vector2( 354, 85 ),
+"values": [  ]
+},
+"name": "task23",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 260, 400 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "target" ]
+},
+"name": "task10",
+"type": 1
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 40, 260 ),
+"size": Vector2( 146, 137 )
+},
+"name": "sequence4",
+"type": 2
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_does_path_reach_target",
+"offset": Vector2( 380, 180 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 404, 112 ),
+"values": [ "target" ]
+},
+"name": "task8",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 220, 220 ),
+"size": Vector2( 134.001, 55 )
+},
+"name": "inverter2",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_see_enemy",
+"offset": Vector2( 260, 300 ),
+"params": [  ],
+"size": Vector2( 354, 85 ),
+"values": [  ]
+},
+"name": "task23",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_enemy_in_range",
+"offset": Vector2( 220, 640 ),
+"params": [  ],
+"size": Vector2( 354.001, 85.0001 ),
+"values": [  ]
+},
+"name": "task6",
+"type": 1
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 220, -240 ),
+"params": [  ],
+"size": Vector2( 351.001, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 20, -240 ),
+"size": Vector2( 126, 55 )
+},
+"name": "inverter",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_has_target",
+"offset": Vector2( 220, -140 ),
+"params": [  ],
+"size": Vector2( 315.001, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 640, -60 ),
+"params": [  ],
+"size": Vector2( 354, 85.0002 ),
+"values": [  ]
+},
+"name": "task21",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 440, 0 ),
+"size": Vector2( 134, 55.0001 )
+},
+"name": "inverter3",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 620, 60 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "target" ]
+},
+"name": "task3",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 220, -20 ),
+"size": Vector2( 138.001, 110 )
+},
+"name": "sequence",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_does_path_reach_target",
+"offset": Vector2( 380, 180 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 404, 112 ),
+"values": [ "target" ]
+},
+"name": "task8",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 220, 220 ),
+"size": Vector2( 134.001, 55 )
+},
+"name": "inverter2",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_see_enemy",
+"offset": Vector2( 260, 300 ),
+"params": [  ],
+"size": Vector2( 354, 85 ),
+"values": [  ]
+},
+"name": "task23",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 260, 400 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "target" ]
+},
+"name": "task10",
+"type": 1
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 40, 260 ),
+"size": Vector2( 146, 137 )
+},
+"name": "sequence4",
+"type": 2
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_follow_path",
+"offset": Vector2( 220, 540 ),
+"params": [  ],
+"size": Vector2( 351.001, 85.0005 ),
+"values": [  ]
+},
+"name": "task5",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_attack",
+"offset": Vector2( 600, 600 ),
+"params": [  ],
+"size": Vector2( 346, 85.0004 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_enemy_in_range",
+"offset": Vector2( 220, 640 ),
+"params": [  ],
+"size": Vector2( 354.001, 85.0001 ),
+"values": [  ]
+},
+"name": "task6",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_see_enemy",
+"offset": Vector2( 600, 700 ),
+"params": [  ],
+"size": Vector2( 351, 85.0001 ),
+"values": [  ]
+},
+"name": "task7",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_attack",
+"offset": Vector2( 220, 740 ),
+"params": [  ],
+"size": Vector2( 351.001, 85.0002 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
+} ],
+"data": {
+"count": 5,
+"offset": Vector2( 40, 620 ),
+"size": Vector2( 146, 191 )
+},
+"name": "sequence3",
+"type": 2
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( -220, 260 ),
+"size": Vector2( 126, 137 )
+},
+"name": "selector",
+"type": 3
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( -440, -60 ),
+"size": Vector2( 146, 137 )
+},
+"name": "sequence2",
+"type": 2
+} ],
+"root": {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 220, -240 ),
+"params": [  ],
+"size": Vector2( 351.001, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 20, -240 ),
+"size": Vector2( 126, 55 )
+},
+"name": "inverter",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_has_target",
+"offset": Vector2( 220, -140 ),
+"params": [  ],
+"size": Vector2( 315.001, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 640, -60 ),
+"params": [  ],
+"size": Vector2( 354, 85.0002 ),
+"values": [  ]
+},
+"name": "task21",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 440, 0 ),
+"size": Vector2( 134, 55.0001 )
+},
+"name": "inverter3",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 620, 60 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "target" ]
+},
+"name": "task3",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 220, -20 ),
+"size": Vector2( 138.001, 110 )
+},
+"name": "sequence",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_does_path_reach_target",
+"offset": Vector2( 380, 180 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 404, 112 ),
+"values": [ "target" ]
+},
+"name": "task8",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 220, 220 ),
+"size": Vector2( 134.001, 55 )
+},
+"name": "inverter2",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_see_enemy",
+"offset": Vector2( 260, 300 ),
+"params": [  ],
+"size": Vector2( 354, 85 ),
+"values": [  ]
+},
+"name": "task23",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 260, 400 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "target" ]
+},
+"name": "task10",
+"type": 1
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 40, 260 ),
+"size": Vector2( 146, 137 )
+},
+"name": "sequence4",
+"type": 2
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_follow_path",
+"offset": Vector2( 220, 540 ),
+"params": [  ],
+"size": Vector2( 351.001, 85.0005 ),
+"values": [  ]
+},
+"name": "task5",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_attack",
+"offset": Vector2( 600, 600 ),
+"params": [  ],
+"size": Vector2( 346, 85.0004 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_enemy_in_range",
+"offset": Vector2( 220, 640 ),
+"params": [  ],
+"size": Vector2( 354.001, 85.0001 ),
+"values": [  ]
+},
+"name": "task6",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_can_see_enemy",
+"offset": Vector2( 600, 700 ),
+"params": [  ],
+"size": Vector2( 351, 85.0001 ),
+"values": [  ]
+},
+"name": "task7",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_attack",
+"offset": Vector2( 220, 740 ),
+"params": [  ],
+"size": Vector2( 351.001, 85.0002 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
+} ],
+"data": {
+"count": 5,
+"offset": Vector2( 40, 620 ),
+"size": Vector2( 146, 191 )
+},
+"name": "sequence3",
+"type": 2
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( -220, 260 ),
+"size": Vector2( 126, 137 )
+},
+"name": "selector",
+"type": 3
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( -440, -60 ),
+"size": Vector2( 146, 137 )
+},
+"name": "sequence2",
+"type": 2
+} ],
+"data": {
+"offset": Vector2( -700, 40 ),
+"size": Vector2( 83, 59.9932 )
+},
+"name": "root",
+"type": 0
+}
+}
+_tree_id = "33291410322305326378"
+
+[node name="move_tree" parent="." index="2"]
+tree = {
+"connection": [ {
+"from": "sequence6",
+"from_port": 0,
+"to": "inverter4",
+"to_port": 0
+}, {
+"from": "sequence6",
+"from_port": 1,
+"to": "task14",
+"to_port": 0
+}, {
+"from": "inverter4",
+"from_port": 0,
+"to": "task16",
+"to_port": 0
+}, {
+"from": "sequence5",
+"from_port": 0,
+"to": "inverter5",
+"to_port": 0
+}, {
+"from": "sequence5",
+"from_port": 1,
+"to": "task9",
+"to_port": 0
+}, {
+"from": "inverter5",
+"from_port": 0,
+"to": "task17",
+"to_port": 0
+}, {
+"from": "selector5",
+"from_port": 0,
+"to": "sequence5",
+"to_port": 0
+}, {
+"from": "sequence5",
+"from_port": 2,
+"to": "inverter6",
+"to_port": 0
+}, {
+"from": "inverter6",
+"from_port": 0,
+"to": "task11",
+"to_port": 0
+}, {
+"from": "sequence6",
+"from_port": 2,
+"to": "task13",
+"to_port": 0
+}, {
+"from": "inverter8",
+"from_port": 0,
+"to": "task18",
+"to_port": 0
+}, {
+"from": "sequence5",
+"from_port": 3,
+"to": "task12",
+"to_port": 0
+}, {
+"from": "selector5",
+"from_port": 1,
+"to": "selector2",
+"to_port": 0
+}, {
+"from": "selector2",
+"from_port": 1,
+"to": "sequence6",
+"to_port": 0
+}, {
+"from": "selector2",
+"from_port": 0,
+"to": "sequence7",
+"to_port": 0
+}, {
+"from": "sequence7",
+"from_port": 0,
+"to": "task15",
+"to_port": 0
+}, {
+"from": "sequence7",
+"from_port": 3,
+"to": "task19",
+"to_port": 0
+}, {
+"from": "sequence7",
+"from_port": 2,
+"to": "inverter8",
+"to_port": 0
+}, {
+"from": "sequence7",
+"from_port": 1,
+"to": "task22",
+"to_port": 0
+}, {
+"from": "root",
+"from_port": 0,
+"to": "selector5",
+"to_port": 0
+} ],
+"nodes": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 120, -360 ),
+"params": [  ],
+"size": Vector2( 351, 85 ),
+"values": [  ]
+},
+"name": "task17",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( -40, -340 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter5",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_has_move_order",
+"offset": Vector2( 100, -260 ),
+"params": [  ],
+"size": Vector2( 353, 85 ),
+"values": [  ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_following_move_order",
+"offset": Vector2( 120, -160 ),
+"params": [  ],
+"size": Vector2( 408, 85 ),
+"values": [  ]
+},
+"name": "task11",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( -40, -160 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter6",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 120, -40 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task12",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( -260, -240 ),
+"size": Vector2( 146, 164 )
+},
+"name": "sequence5",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 0, 120 ),
+"params": [  ],
+"size": Vector2( 354, 85.0001 ),
+"values": [  ]
+},
+"name": "task15",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_following_move_order",
+"offset": Vector2( 0, 220 ),
+"params": [  ],
+"size": Vector2( 408, 85 ),
+"values": [  ]
+},
+"name": "task22",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_does_path_reach_target",
+"offset": Vector2( 180, 320 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 404, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 0, 340 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter8",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 0, 480 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( -240, 220 ),
+"size": Vector2( 146, 164 )
+},
+"name": "sequence7",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 180, 600 ),
+"params": [  ],
+"size": Vector2( 351, 85 ),
+"values": [  ]
+},
+"name": "task16",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 20, 620 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter4",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 100, 720 ),
+"params": [  ],
+"size": Vector2( 346, 85 ),
+"values": [  ]
+},
+"name": "task14",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_follow_path",
+"offset": Vector2( 100, 840 ),
+"params": [  ],
+"size": Vector2( 346, 85 ),
+"values": [  ]
+},
+"name": "task13",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( -180, 660 ),
+"size": Vector2( 146, 164 )
+},
+"name": "sequence6",
+"type": 2
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( -500, 400 ),
+"size": Vector2( 134, 110 )
+},
+"name": "selector2",
+"type": 3
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( -740, 40 ),
+"size": Vector2( 134, 110 )
+},
+"name": "selector5",
+"type": 3
+} ],
+"data": {
+"offset": Vector2( -930, 45 ),
+"size": Vector2( 83, 59.9933 )
+},
+"name": "root",
+"type": 0
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 180, 600 ),
+"params": [  ],
+"size": Vector2( 351, 85 ),
+"values": [  ]
+},
+"name": "task16",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 100, 720 ),
+"params": [  ],
+"size": Vector2( 346, 85 ),
+"values": [  ]
+},
+"name": "task14",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 120, -360 ),
+"params": [  ],
+"size": Vector2( 351, 85 ),
+"values": [  ]
+},
+"name": "task17",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( -40, -340 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter5",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 120, -360 ),
+"params": [  ],
+"size": Vector2( 351, 85 ),
+"values": [  ]
+},
+"name": "task17",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_has_move_order",
+"offset": Vector2( 100, -260 ),
+"params": [  ],
+"size": Vector2( 353, 85 ),
+"values": [  ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_following_move_order",
+"offset": Vector2( 120, -160 ),
+"params": [  ],
+"size": Vector2( 408, 85 ),
+"values": [  ]
+},
+"name": "task11",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_following_move_order",
+"offset": Vector2( 120, -160 ),
+"params": [  ],
+"size": Vector2( 408, 85 ),
+"values": [  ]
+},
+"name": "task11",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( -40, -160 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter6",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_follow_path",
+"offset": Vector2( 100, 840 ),
+"params": [  ],
+"size": Vector2( 346, 85 ),
+"values": [  ]
+},
+"name": "task13",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 180, 600 ),
+"params": [  ],
+"size": Vector2( 351, 85 ),
+"values": [  ]
+},
+"name": "task16",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 20, 620 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter4",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 120, -40 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task12",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 0, 120 ),
+"params": [  ],
+"size": Vector2( 354, 85.0001 ),
+"values": [  ]
+},
+"name": "task15",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_following_move_order",
+"offset": Vector2( 0, 220 ),
+"params": [  ],
+"size": Vector2( 408, 85 ),
+"values": [  ]
+},
+"name": "task22",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_does_path_reach_target",
+"offset": Vector2( 180, 320 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 404, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 0, 340 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter8",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 0, 480 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( -240, 220 ),
+"size": Vector2( 146, 164 )
+},
+"name": "sequence7",
+"type": 2
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 0, 480 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task19",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 0, 120 ),
+"params": [  ],
+"size": Vector2( 354, 85.0001 ),
+"values": [  ]
+},
+"name": "task15",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_does_path_reach_target",
+"offset": Vector2( 180, 320 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 404, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task18",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_does_path_reach_target",
+"offset": Vector2( 180, 320 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 404, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 0, 340 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter8",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_following_move_order",
+"offset": Vector2( 0, 220 ),
+"params": [  ],
+"size": Vector2( 408, 85 ),
+"values": [  ]
+},
+"name": "task22",
+"type": 1
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 180, 600 ),
+"params": [  ],
+"size": Vector2( 351, 85 ),
+"values": [  ]
+},
+"name": "task16",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 20, 620 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter4",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 100, 720 ),
+"params": [  ],
+"size": Vector2( 346, 85 ),
+"values": [  ]
+},
+"name": "task14",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_follow_path",
+"offset": Vector2( 100, 840 ),
+"params": [  ],
+"size": Vector2( 346, 85 ),
+"values": [  ]
+},
+"name": "task13",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( -180, 660 ),
+"size": Vector2( 146, 164 )
+},
+"name": "sequence6",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 0, 120 ),
+"params": [  ],
+"size": Vector2( 354, 85.0001 ),
+"values": [  ]
+},
+"name": "task15",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_following_move_order",
+"offset": Vector2( 0, 220 ),
+"params": [  ],
+"size": Vector2( 408, 85 ),
+"values": [  ]
+},
+"name": "task22",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_does_path_reach_target",
+"offset": Vector2( 180, 320 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 404, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 0, 340 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter8",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 0, 480 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( -240, 220 ),
+"size": Vector2( 146, 164 )
+},
+"name": "sequence7",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 180, 600 ),
+"params": [  ],
+"size": Vector2( 351, 85 ),
+"values": [  ]
+},
+"name": "task16",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 20, 620 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter4",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 100, 720 ),
+"params": [  ],
+"size": Vector2( 346, 85 ),
+"values": [  ]
+},
+"name": "task14",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_follow_path",
+"offset": Vector2( 100, 840 ),
+"params": [  ],
+"size": Vector2( 346, 85 ),
+"values": [  ]
+},
+"name": "task13",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( -180, 660 ),
+"size": Vector2( 146, 164 )
+},
+"name": "sequence6",
+"type": 2
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( -500, 400 ),
+"size": Vector2( 134, 110 )
+},
+"name": "selector2",
+"type": 3
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 120, -360 ),
+"params": [  ],
+"size": Vector2( 351, 85 ),
+"values": [  ]
+},
+"name": "task17",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( -40, -340 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter5",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_has_move_order",
+"offset": Vector2( 100, -260 ),
+"params": [  ],
+"size": Vector2( 353, 85 ),
+"values": [  ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_following_move_order",
+"offset": Vector2( 120, -160 ),
+"params": [  ],
+"size": Vector2( 408, 85 ),
+"values": [  ]
+},
+"name": "task11",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( -40, -160 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter6",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 120, -40 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task12",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( -260, -240 ),
+"size": Vector2( 146, 164 )
+},
+"name": "sequence5",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 120, -360 ),
+"params": [  ],
+"size": Vector2( 351, 85 ),
+"values": [  ]
+},
+"name": "task17",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( -40, -340 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter5",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_has_move_order",
+"offset": Vector2( 100, -260 ),
+"params": [  ],
+"size": Vector2( 353, 85 ),
+"values": [  ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_following_move_order",
+"offset": Vector2( 120, -160 ),
+"params": [  ],
+"size": Vector2( 408, 85 ),
+"values": [  ]
+},
+"name": "task11",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( -40, -160 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter6",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 120, -40 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task12",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( -260, -240 ),
+"size": Vector2( 146, 164 )
+},
+"name": "sequence5",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 0, 120 ),
+"params": [  ],
+"size": Vector2( 354, 85.0001 ),
+"values": [  ]
+},
+"name": "task15",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_following_move_order",
+"offset": Vector2( 0, 220 ),
+"params": [  ],
+"size": Vector2( 408, 85 ),
+"values": [  ]
+},
+"name": "task22",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_does_path_reach_target",
+"offset": Vector2( 180, 320 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 404, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 0, 340 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter8",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 0, 480 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( -240, 220 ),
+"size": Vector2( 146, 164 )
+},
+"name": "sequence7",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 180, 600 ),
+"params": [  ],
+"size": Vector2( 351, 85 ),
+"values": [  ]
+},
+"name": "task16",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 20, 620 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter4",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 100, 720 ),
+"params": [  ],
+"size": Vector2( 346, 85 ),
+"values": [  ]
+},
+"name": "task14",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_follow_path",
+"offset": Vector2( 100, 840 ),
+"params": [  ],
+"size": Vector2( 346, 85 ),
+"values": [  ]
+},
+"name": "task13",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( -180, 660 ),
+"size": Vector2( 146, 164 )
+},
+"name": "sequence6",
+"type": 2
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( -500, 400 ),
+"size": Vector2( 134, 110 )
+},
+"name": "selector2",
+"type": 3
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( -740, 40 ),
+"size": Vector2( 134, 110 )
+},
+"name": "selector5",
+"type": 3
+} ],
+"root": {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 120, -360 ),
+"params": [  ],
+"size": Vector2( 351, 85 ),
+"values": [  ]
+},
+"name": "task17",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( -40, -340 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter5",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_has_move_order",
+"offset": Vector2( 100, -260 ),
+"params": [  ],
+"size": Vector2( 353, 85 ),
+"values": [  ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_following_move_order",
+"offset": Vector2( 120, -160 ),
+"params": [  ],
+"size": Vector2( 408, 85 ),
+"values": [  ]
+},
+"name": "task11",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( -40, -160 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter6",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 120, -40 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task12",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( -260, -240 ),
+"size": Vector2( 146, 164 )
+},
+"name": "sequence5",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 0, 120 ),
+"params": [  ],
+"size": Vector2( 354, 85.0001 ),
+"values": [  ]
+},
+"name": "task15",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_following_move_order",
+"offset": Vector2( 0, 220 ),
+"params": [  ],
+"size": Vector2( 408, 85 ),
+"values": [  ]
+},
+"name": "task22",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_does_path_reach_target",
+"offset": Vector2( 180, 320 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 404, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 0, 340 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter8",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_create_path",
+"offset": Vector2( 0, 480 ),
+"params": [ [ "move_order", 1 ] ],
+"size": Vector2( 323, 112 ),
+"values": [ "move_order" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( -240, 220 ),
+"size": Vector2( 146, 164 )
+},
+"name": "sequence7",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_tactics_pause",
+"offset": Vector2( 180, 600 ),
+"params": [  ],
+"size": Vector2( 351, 85 ),
+"values": [  ]
+},
+"name": "task16",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 20, 620 ),
+"size": Vector2( 134, 55 )
+},
+"name": "inverter4",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_has_path",
+"offset": Vector2( 100, 720 ),
+"params": [  ],
+"size": Vector2( 346, 85 ),
+"values": [  ]
+},
+"name": "task14",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_follow_path",
+"offset": Vector2( 100, 840 ),
+"params": [  ],
+"size": Vector2( 346, 85 ),
+"values": [  ]
+},
+"name": "task13",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( -180, 660 ),
+"size": Vector2( 146, 164 )
+},
+"name": "sequence6",
+"type": 2
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( -500, 400 ),
+"size": Vector2( 134, 110 )
+},
+"name": "selector2",
+"type": 3
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( -740, 40 ),
+"size": Vector2( 134, 110 )
+},
+"name": "selector5",
+"type": 3
+} ],
+"data": {
+"offset": Vector2( -930, 45 ),
+"size": Vector2( 83, 59.9933 )
+},
+"name": "root",
+"type": 0
+}
+}
+_tree_id = "33291410321770890315"
+
+[node name="Detection" parent="." index="4"]
+visible = false
+
+[node name="Polygon2D" parent="." index="5"]
+color = Color( 0, 0.439216, 1.39608, 1 )
+
+[node name="select_particle" type="Particles2D" parent="." index="13"]
+scale = Vector2( 0.1, 0.1 )
+emitting = false
+amount = 4
+lifetime = 2.0
+process_material = SubResource( 5 )
+texture = ExtResource( 3 )
+
+[connection signal="input_event" from="." to="." method="_on_base_ally_input_event"]

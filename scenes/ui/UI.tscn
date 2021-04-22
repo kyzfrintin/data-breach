@@ -1,0 +1,812 @@
+[gd_scene load_steps=28 format=2]
+
+[ext_resource path="res://addons/shaderV/rgba/blackNwhite.gd" type="Script" id=1]
+[ext_resource path="res://addons/shaderV/rgba/noise/fractal/perlin3d_fractal.gd" type="Script" id=2]
+[ext_resource path="res://addons/shaderV/rgba/posterize.gd" type="Script" id=3]
+[ext_resource path="res://scenes/ui/struct_button.gd" type="Script" id=4]
+[ext_resource path="res://scenes/structures/constructor.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/structures/RAM.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/structures/bit_miner.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/entities/units/allies/base_ally.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/ui/unit_button.gd" type="Script" id=9]
+[ext_resource path="res://scenes/ui/HSlider.gd" type="Script" id=10]
+[ext_resource path="res://audio/sound/shot.wav" type="AudioStream" id=11]
+[ext_resource path="res://addons/mixing-desk/sound/nonspatial/polysound.gd" type="Script" id=12]
+[ext_resource path="res://scenes/structures/base_tower.tscn" type="PackedScene" id=13]
+[ext_resource path="res://audio/sound/unillama_attack.wav" type="AudioStream" id=14]
+[ext_resource path="res://scenes/ui/tac_display.gd" type="Script" id=15]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.156863, 0.156863, 0.156863, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.258824, 0.258824, 0.258824, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Theme" id=4]
+Button/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
+Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+Button/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
+Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+Button/constants/hseparation = 2
+Button/fonts/font = null
+Button/icons/ = null
+Button/styles/disabled = null
+Button/styles/focus = null
+Button/styles/hover = SubResource( 1 )
+Button/styles/normal = SubResource( 1 )
+Button/styles/pressed = SubResource( 2 )
+TabContainer/colors/font_color_bg = Color( 0.69, 0.69, 0.69, 1 )
+TabContainer/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+TabContainer/colors/font_color_fg = Color( 0.94, 0.94, 0.94, 1 )
+TabContainer/constants/hseparation = 4
+TabContainer/constants/label_valign_bg = 2
+TabContainer/constants/label_valign_fg = 0
+TabContainer/constants/side_margin = 8
+TabContainer/constants/top_margin = 24
+TabContainer/fonts/font = null
+TabContainer/icons/decrement = null
+TabContainer/icons/decrement_highlight = null
+TabContainer/icons/increment = null
+TabContainer/icons/increment_highlight = null
+TabContainer/icons/menu = null
+TabContainer/icons/menu_highlight = null
+TabContainer/styles/panel = SubResource( 3 )
+TabContainer/styles/tab_bg = null
+TabContainer/styles/tab_disabled = null
+TabContainer/styles/tab_fg = null
+Tabs/colors/font_color_bg = Color( 0.69, 0.69, 0.69, 1 )
+Tabs/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+Tabs/colors/font_color_fg = Color( 0.94, 0.94, 0.94, 1 )
+Tabs/constants/hseparation = 4
+Tabs/constants/label_valign_bg = 2
+Tabs/constants/label_valign_fg = 0
+Tabs/constants/top_margin = 24
+Tabs/fonts/font = null
+Tabs/icons/close = null
+Tabs/icons/decrement = null
+Tabs/icons/decrement_highlight = null
+Tabs/icons/increment = null
+Tabs/icons/increment_highlight = null
+Tabs/styles/button = null
+Tabs/styles/button_pressed = null
+Tabs/styles/panel = null
+Tabs/styles/tab_bg = null
+Tabs/styles/tab_disabled = null
+Tabs/styles/tab_fg = null
+
+[sub_resource type="VisualShaderNodeInput" id=5]
+input_name = "time"
+
+[sub_resource type="VisualShaderNodeCustom" id=6]
+output_port_for_preview = 0
+default_input_values = [ 1, 6, 2, Vector3( 2, 2, 0 ), 3, 2, 4, 0.8, 5, 0.5, 6, 0.6, 7, Vector3( 0.5, 0.5, 0 ), 8, 0 ]
+script = ExtResource( 2 )
+
+[sub_resource type="VisualShaderNodeInput" id=7]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeScalarOp" id=8]
+default_input_values = [ 0, 0.0, 1, 0.1 ]
+operator = 2
+
+[sub_resource type="VisualShaderNodeCustom" id=9]
+default_input_values = [ 1, 8.0 ]
+script = ExtResource( 3 )
+
+[sub_resource type="VisualShaderNodeCustom" id=10]
+default_input_values = [ 1, 0.5 ]
+script = ExtResource( 1 )
+
+[sub_resource type="VisualShader" id=11]
+code = "shader_type canvas_item;
+render_mode blend_add;
+
+
+
+// FractalPerlinNoise3D
+
+float perlin3dNoiseFractalFunc(vec3 P) {
+	vec3 Pi0 = floor(P);
+	vec3 Pi1 = Pi0 + vec3(1.0);
+	Pi0 = Pi0 - floor(Pi0 * (1.0 / 289.0)) * 289.0;
+	Pi1 = Pi1 - floor(Pi1 * (1.0 / 289.0)) * 289.0;
+	vec3 Pf0 = fract(P);
+	vec3 Pf1 = Pf0 - vec3(1.0);
+	vec4 ix = vec4(Pi0.x, Pi1.x, Pi0.x, Pi1.x);
+	vec4 iy = vec4(Pi0.yy, Pi1.yy);
+	vec4 iz0 = vec4(Pi0.z);
+	vec4 iz1 = vec4(Pi1.z);
+	
+	vec4 ixy = (((((((ix*34.0)+1.0)*ix)-floor(((ix*34.0)+1.0)*ix*(1.0/289.0))*289.0 + iy)*34.0)+1.0)*
+		((((ix*34.0)+1.0)*ix)-floor(((ix*34.0)+1.0)*ix*(1.0/289.0))*289.0 + iy))-
+		floor(((((((ix*34.0)+1.0)*ix)-floor(((ix*34.0)+1.0)*ix*(1.0/289.0))*289.0 + iy)*34.0)+1.0)*
+		((((ix*34.0)+1.0)*ix)-floor(((ix*34.0)+1.0)*ix*(1.0/289.0))*289.0 + iy)*(1.0/289.0))*289.0;
+	vec4 ixy0 = ((((ixy + iz0)*34.0)+1.0)*(ixy + iz0))-floor((((ixy + iz0)*34.0)+1.0)*(ixy + iz0)*(1.0/289.0))*289.0;
+	vec4 ixy1 = ((((ixy + iz1)*34.0)+1.0)*(ixy + iz1))-floor((((ixy + iz1)*34.0)+1.0)*(ixy + iz1)*(1.0/289.0))*289.0;
+	
+	vec4 gx0 = ixy0 * (1.0 / 7.0);
+	vec4 gy0 = fract(floor(gx0) * (1.0 / 7.0)) - 0.5;
+	gx0 = fract(gx0);
+	vec4 gz0 = vec4(0.5) - abs(gx0) - abs(gy0);
+	vec4 sz0 = step(gz0, vec4(0.0));
+	gx0 -= sz0 * (step(0.0, gx0) - 0.5);
+	gy0 -= sz0 * (step(0.0, gy0) - 0.5);
+	
+	vec4 gx1 = ixy1 * (1.0 / 7.0);
+	vec4 gy1 = fract(floor(gx1) * (1.0 / 7.0)) - 0.5;
+	gx1 = fract(gx1);
+	vec4 gz1 = vec4(0.5) - abs(gx1) - abs(gy1);
+	vec4 sz1 = step(gz1, vec4(0.0));
+	gx1 -= sz1 * (step(0.0, gx1) - 0.5);
+	gy1 -= sz1 * (step(0.0, gy1) - 0.5);
+	
+	vec3 g000 = vec3(gx0.x,gy0.x,gz0.x);
+	vec3 g100 = vec3(gx0.y,gy0.y,gz0.y);
+	vec3 g010 = vec3(gx0.z,gy0.z,gz0.z);
+	vec3 g110 = vec3(gx0.w,gy0.w,gz0.w);
+	vec3 g001 = vec3(gx1.x,gy1.x,gz1.x);
+	vec3 g101 = vec3(gx1.y,gy1.y,gz1.y);
+	vec3 g011 = vec3(gx1.z,gy1.z,gz1.z);
+	vec3 g111 = vec3(gx1.w,gy1.w,gz1.w);
+	
+	vec4 norm0 = 1.79284291400159 - 0.85373472095314 * vec4(dot(g000, g000), dot(g010, g010), dot(g100, g100), dot(g110, g110));
+	g000 *= norm0.x;
+	g010 *= norm0.y;
+	g100 *= norm0.z;
+	g110 *= norm0.w;
+	vec4 norm1 = 1.79284291400159 - 0.85373472095314 * vec4(dot(g001, g001), dot(g011, g011), dot(g101, g101), dot(g111, g111));
+	g001 *= norm1.x;
+	g011 *= norm1.y;
+	g101 *= norm1.z;
+	g111 *= norm1.w;
+	
+	float n000 = dot(g000, Pf0);
+	float n100 = dot(g100, vec3(Pf1.x, Pf0.yz));
+	float n010 = dot(g010, vec3(Pf0.x, Pf1.y, Pf0.z));
+	float n110 = dot(g110, vec3(Pf1.xy, Pf0.z));
+	float n001 = dot(g001, vec3(Pf0.xy, Pf1.z));
+	float n101 = dot(g101, vec3(Pf1.x, Pf0.y, Pf1.z));
+	float n011 = dot(g011, vec3(Pf0.x, Pf1.yz));
+	float n111 = dot(g111, Pf1);
+	
+	vec3 fade_xyz = Pf0 * Pf0 * Pf0 * (Pf0 * (Pf0 * 6.0 - 15.0) + 10.0);
+	vec4 n_z = mix(vec4(n000, n100, n010, n110), vec4(n001, n101, n011, n111), fade_xyz.z);
+	vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
+	float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x); 
+	return 2.2 * n_xyz;
+}
+float perlinNoise3DFBM(vec2 _uv_pn3fbm, int _oct_pn3fbm, vec2 _per_pn3fbm, float _lac_pn3fbm,
+		float _persist_pn3fbm, float _rot_pn3fbm, float _ampl_pn3fbm, vec2 _shift_pn3fbm, float _time_pn3fbm) {
+	float _v = 0.0;
+	float _a = _ampl_pn3fbm;
+	mat2 _r0t = mat2(vec2(cos(_rot_pn3fbm), sin(_rot_pn3fbm)), vec2(-sin(_rot_pn3fbm), cos(_rot_pn3fbm)));
+	for (int i = 0; i < _oct_pn3fbm; ++i) {
+		_v += _a * perlin3dNoiseFractalFunc(vec3(_uv_pn3fbm * _per_pn3fbm, _time_pn3fbm));
+		_uv_pn3fbm = _r0t * _uv_pn3fbm * _lac_pn3fbm + _shift_pn3fbm;
+		_a *= _persist_pn3fbm;
+	}
+	return (min(_v, 1.0) + 1.0) * 0.5;
+}
+
+// Posterize
+
+vec3 p0ster1zeFunc(vec3 _col_p0sr1ze, float _steps_p0sterize){
+	return floor(_col_p0sr1ze * _steps_p0sterize) / (_steps_p0sterize - 1.0);
+}
+
+// BlackAndWhite
+
+vec3 blackNwh1teFunc(vec3 _c0l_bNw, float _thresh0ld_bNw){
+	return vec3( ( (0.21 * _c0l_bNw.r + 0.71 * _c0l_bNw.g + 0.07 * _c0l_bNw.b) < _thresh0ld_bNw) ? 0.0 : 1.0);
+}
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Input:5
+	vec3 n_out5p0 = vec3(UV, 0.0);
+
+// Input:3
+	float n_out3p0 = TIME;
+
+// ScalarOp:6
+	float n_in6p1 = 0.10000;
+	float n_out6p0 = n_out3p0 * n_in6p1;
+
+// FractalPerlinNoise3D:4
+	float n_in4p1 = 6.00000;
+	vec3 n_in4p2 = vec3(2.00000, 2.00000, 0.00000);
+	float n_in4p3 = 2.00000;
+	float n_in4p4 = 0.80000;
+	float n_in4p5 = 0.50000;
+	float n_in4p6 = 0.60000;
+	vec3 n_in4p7 = vec3(0.50000, 0.50000, 0.00000);
+	float n_out4p0;
+	{
+		n_out4p0 = perlinNoise3DFBM(n_out5p0.xy, int(n_in4p1), n_in4p2.xy, n_in4p3, n_in4p4, n_in4p5, n_in4p6, n_in4p7.xy, n_out6p0);
+	}
+
+// Posterize:7
+	float n_in7p1 = 8.00000;
+	vec3 n_out7p0;
+	{
+		n_out7p0 = p0ster1zeFunc(vec3(n_out4p0), n_in7p1);
+	}
+
+// BlackAndWhite:8
+	float n_in8p1 = 0.50000;
+	vec3 n_out8p0;
+	{
+		n_out8p0 = blackNwh1teFunc(n_out7p0, n_in8p1);
+	}
+
+// Output:0
+	COLOR.a = dot(n_out8p0, vec3(0.333333, 0.333333, 0.333333));
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -758.569, 158 )
+mode = 1
+modes/blend = 1
+flags/light_only = false
+nodes/fragment/3/node = SubResource( 5 )
+nodes/fragment/3/position = Vector2( -600, 440 )
+nodes/fragment/4/node = SubResource( 6 )
+nodes/fragment/4/position = Vector2( -200, 220 )
+nodes/fragment/5/node = SubResource( 7 )
+nodes/fragment/5/position = Vector2( -440, 160 )
+nodes/fragment/6/node = SubResource( 8 )
+nodes/fragment/6/position = Vector2( -423.569, 413 )
+nodes/fragment/7/node = SubResource( 9 )
+nodes/fragment/7/position = Vector2( 40, 220 )
+nodes/fragment/8/node = SubResource( 10 )
+nodes/fragment/8/position = Vector2( 220, 180 )
+nodes/fragment/connections = PoolIntArray( 5, 0, 4, 0, 3, 0, 6, 0, 6, 0, 4, 8, 4, 0, 7, 0, 7, 0, 8, 0, 8, 0, 0, 1 )
+
+[sub_resource type="ShaderMaterial" id=12]
+shader = SubResource( 11 )
+
+[node name="UI" type="CanvasLayer"]
+
+[node name="tac_display" type="Control" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+theme = SubResource( 4 )
+script = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="ColorRect" parent="tac_display"]
+modulate = Color( 1.10196, 1, 1, 0.368627 )
+material = SubResource( 12 )
+margin_left = -8.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+mouse_filter = 2
+color = Color( 0.313726, 0.117647, 0.152941, 0.443137 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="tac_label" type="Label" parent="tac_display"]
+margin_left = 904.0
+margin_top = 1048.0
+margin_right = 1009.0
+margin_bottom = 1062.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "<tactical_mode>"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="tac_border" type="Line2D" parent="tac_display"]
+position = Vector2( 16, 1048 )
+points = PoolVector2Array( -8, 24, -8, -1040, 1896, -1040, 1896, 24, -8, 24 )
+default_color = Color( 1, 0.4, 0.4, 1 )
+begin_cap_mode = 1
+end_cap_mode = 1
+antialiased = true
+
+[node name="build_menu" type="TabContainer" parent="tac_display"]
+margin_left = 40.0
+margin_top = 710.0
+margin_right = 320.0
+margin_bottom = 1040.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Structures" type="Tabs" parent="tac_display/build_menu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 24.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="tac_display/build_menu/Structures"]
+margin_left = 10.0
+margin_top = 16.0
+margin_right = 270.0
+margin_bottom = 306.0
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="tac_display/build_menu/Structures/ScrollContainer"]
+margin_right = 260.0
+margin_bottom = 290.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="utility" type="Label" parent="tac_display/build_menu/Structures/ScrollContainer/VBoxContainer"]
+margin_right = 260.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "------[utility]------"
+align = 1
+valign = 1
+
+[node name="RAM" type="HBoxContainer" parent="tac_display/build_menu/Structures/ScrollContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 260.0
+margin_bottom = 40.0
+custom_constants/separation = 10
+
+[node name="Button" type="Button" parent="tac_display/build_menu/Structures/ScrollContainer/VBoxContainer/RAM"]
+margin_right = 88.0
+margin_bottom = 16.0
+text = "[RAM_BLOCK]"
+script = ExtResource( 4 )
+structure = ExtResource( 6 )
+cost = 20
+
+[node name="Label" type="Label" parent="tac_display/build_menu/Structures/ScrollContainer/VBoxContainer/RAM"]
+margin_left = 98.0
+margin_right = 260.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "20 BITS"
+align = 2
+valign = 1
+
+[node name="miner" type="HBoxContainer" parent="tac_display/build_menu/Structures/ScrollContainer/VBoxContainer"]
+margin_top = 50.0
+margin_right = 260.0
+margin_bottom = 66.0
+custom_constants/separation = 10
+
+[node name="Button" type="Button" parent="tac_display/build_menu/Structures/ScrollContainer/VBoxContainer/miner"]
+margin_right = 79.0
+margin_bottom = 16.0
+text = "[BIT_MINER]"
+script = ExtResource( 4 )
+structure = ExtResource( 7 )
+cost = 40
+
+[node name="Label" type="Label" parent="tac_display/build_menu/Structures/ScrollContainer/VBoxContainer/miner"]
+margin_left = 89.0
+margin_right = 260.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "20 BITS"
+align = 2
+valign = 1
+
+[node name="units" type="Label" parent="tac_display/build_menu/Structures/ScrollContainer/VBoxContainer"]
+margin_top = 76.0
+margin_right = 260.0
+margin_bottom = 90.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "------[unit_production]------"
+align = 1
+valign = 1
+
+[node name="constructor" type="HBoxContainer" parent="tac_display/build_menu/Structures/ScrollContainer/VBoxContainer"]
+margin_top = 100.0
+margin_right = 260.0
+margin_bottom = 116.0
+custom_constants/separation = 10
+
+[node name="Button" type="Button" parent="tac_display/build_menu/Structures/ScrollContainer/VBoxContainer/constructor"]
+margin_right = 105.0
+margin_bottom = 16.0
+text = "[CONSTRUCTOR]"
+script = ExtResource( 4 )
+structure = ExtResource( 5 )
+cost = 100
+
+[node name="Label" type="Label" parent="tac_display/build_menu/Structures/ScrollContainer/VBoxContainer/constructor"]
+margin_left = 115.0
+margin_right = 260.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "100 BITS"
+align = 2
+valign = 1
+
+[node name="def" type="Label" parent="tac_display/build_menu/Structures/ScrollContainer/VBoxContainer"]
+margin_top = 126.0
+margin_right = 260.0
+margin_bottom = 140.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "------[defence]------"
+align = 1
+valign = 1
+
+[node name="constructor2" type="HBoxContainer" parent="tac_display/build_menu/Structures/ScrollContainer/VBoxContainer"]
+margin_top = 150.0
+margin_right = 260.0
+margin_bottom = 166.0
+custom_constants/separation = 10
+
+[node name="Button" type="Button" parent="tac_display/build_menu/Structures/ScrollContainer/VBoxContainer/constructor2"]
+margin_right = 56.0
+margin_bottom = 16.0
+text = "[TOWER]"
+script = ExtResource( 4 )
+structure = ExtResource( 13 )
+cost = 50
+
+[node name="Label" type="Label" parent="tac_display/build_menu/Structures/ScrollContainer/VBoxContainer/constructor2"]
+margin_left = 66.0
+margin_right = 260.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "50 BITS"
+align = 2
+valign = 1
+
+[node name="Units" type="Tabs" parent="tac_display/build_menu"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 24.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="tac_display/build_menu/Units"]
+margin_left = 10.0
+margin_top = 16.0
+margin_right = 270.0
+margin_bottom = 276.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="tac_display/build_menu/Units/ScrollContainer"]
+margin_right = 260.0
+margin_bottom = 260.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="combat" type="Label" parent="tac_display/build_menu/Units/ScrollContainer/VBoxContainer2"]
+margin_right = 260.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "------[combat]------"
+align = 1
+valign = 1
+
+[node name="fighter_drone" type="HBoxContainer" parent="tac_display/build_menu/Units/ScrollContainer/VBoxContainer2"]
+margin_top = 24.0
+margin_right = 260.0
+margin_bottom = 40.0
+custom_constants/separation = 10
+
+[node name="Button" type="Button" parent="tac_display/build_menu/Units/ScrollContainer/VBoxContainer2/fighter_drone"]
+margin_right = 116.0
+margin_bottom = 16.0
+text = "[FIGHTER_DRONE]"
+script = ExtResource( 9 )
+unit = ExtResource( 8 )
+cost = 5
+build_time = 1
+ram_cost = 1
+
+[node name="Label" type="Label" parent="tac_display/build_menu/Units/ScrollContainer/VBoxContainer2/fighter_drone"]
+margin_left = 126.0
+margin_right = 260.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "20 BITS"
+align = 2
+valign = 1
+
+[node name="utility" type="Label" parent="tac_display/build_menu/Units/ScrollContainer/VBoxContainer2"]
+margin_top = 50.0
+margin_right = 260.0
+margin_bottom = 64.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "------[utility]------"
+align = 1
+valign = 1
+
+[node name="surrogate" type="HBoxContainer" parent="tac_display/build_menu/Units/ScrollContainer/VBoxContainer2"]
+margin_top = 74.0
+margin_right = 260.0
+margin_bottom = 90.0
+custom_constants/separation = 10
+
+[node name="Button" type="Button" parent="tac_display/build_menu/Units/ScrollContainer/VBoxContainer2/surrogate"]
+margin_right = 87.0
+margin_bottom = 16.0
+text = "[SURROGATE]"
+
+[node name="Label" type="Label" parent="tac_display/build_menu/Units/ScrollContainer/VBoxContainer2/surrogate"]
+margin_left = 97.0
+margin_right = 260.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "80 BITS"
+align = 2
+valign = 1
+
+[node name="HSlider" type="HSlider" parent="tac_display/build_menu/Units"]
+margin_left = 10.0
+margin_top = 286.0
+margin_right = 220.0
+margin_bottom = 302.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="tac_display/build_menu/Units/HSlider"]
+margin_left = 220.0
+margin_right = 260.0
+margin_bottom = 14.0
+text = "0"
+align = 2
+
+[node name="Research" type="Tabs" parent="tac_display/build_menu"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 24.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="tac_display/build_menu/Research"]
+margin_left = 10.0
+margin_top = 16.0
+margin_right = 270.0
+margin_bottom = 306.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="tac_display/build_menu/Research/ScrollContainer"]
+margin_right = 260.0
+margin_bottom = 290.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="combat" type="Label" parent="tac_display/build_menu/Research/ScrollContainer/VBoxContainer2"]
+margin_right = 260.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "------[combat]------"
+align = 1
+valign = 1
+
+[node name="fighter_drone" type="HBoxContainer" parent="tac_display/build_menu/Research/ScrollContainer/VBoxContainer2"]
+margin_top = 24.0
+margin_right = 260.0
+margin_bottom = 40.0
+custom_constants/separation = 10
+
+[node name="Button" type="Button" parent="tac_display/build_menu/Research/ScrollContainer/VBoxContainer2/fighter_drone"]
+margin_right = 116.0
+margin_bottom = 16.0
+text = "[FIGHTER_DRONE]"
+
+[node name="Label" type="Label" parent="tac_display/build_menu/Research/ScrollContainer/VBoxContainer2/fighter_drone"]
+margin_left = 126.0
+margin_right = 260.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "20 BITS"
+align = 2
+valign = 1
+
+[node name="utility" type="Label" parent="tac_display/build_menu/Research/ScrollContainer/VBoxContainer2"]
+margin_top = 50.0
+margin_right = 260.0
+margin_bottom = 64.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "------[utility]------"
+align = 1
+valign = 1
+
+[node name="surrogate" type="HBoxContainer" parent="tac_display/build_menu/Research/ScrollContainer/VBoxContainer2"]
+margin_top = 74.0
+margin_right = 260.0
+margin_bottom = 90.0
+custom_constants/separation = 10
+
+[node name="Button" type="Button" parent="tac_display/build_menu/Research/ScrollContainer/VBoxContainer2/surrogate"]
+margin_right = 87.0
+margin_bottom = 16.0
+text = "[SURROGATE]"
+
+[node name="Label" type="Label" parent="tac_display/build_menu/Research/ScrollContainer/VBoxContainer2/surrogate"]
+margin_left = 97.0
+margin_right = 260.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "80 BITS"
+align = 2
+valign = 1
+
+[node name="button_press" type="Node" parent="tac_display/build_menu"]
+script = ExtResource( 12 )
+volume_range = 4.0
+pitch_range = 3.0
+
+[node name="tick" type="AudioStreamPlayer" parent="tac_display/build_menu/button_press"]
+stream = ExtResource( 11 )
+volume_db = -20.0
+pitch_scale = 10.0
+bus = "UI"
+
+[node name="place_struct" type="Node" parent="tac_display/build_menu"]
+script = ExtResource( 12 )
+volume_range = 4.0
+pitch_range = 0.3
+
+[node name="tick" type="AudioStreamPlayer" parent="tac_display/build_menu/place_struct"]
+stream = ExtResource( 11 )
+volume_db = -20.0
+pitch_scale = 4.0
+bus = "UI"
+
+[node name="tick_low" type="AudioStreamPlayer" parent="tac_display/build_menu/place_struct"]
+stream = ExtResource( 14 )
+volume_db = 4.0
+bus = "UI"
+
+[node name="place_unit" type="Node" parent="tac_display/build_menu"]
+script = ExtResource( 12 )
+volume_range = 4.0
+pitch_range = 0.3
+
+[node name="tick" type="AudioStreamPlayer" parent="tac_display/build_menu/place_unit"]
+stream = ExtResource( 11 )
+volume_db = -20.0
+pitch_scale = 7.0
+bus = "UI"
+
+[node name="tick_low" type="AudioStreamPlayer" parent="tac_display/build_menu/place_unit"]
+stream = ExtResource( 14 )
+pitch_scale = 2.0
+bus = "UI"
+
+[node name="pause_buts" type="Control" parent="tac_display"]
+margin_left = 1760.0
+margin_top = 10.0
+margin_right = 1800.0
+margin_bottom = 50.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="tac_display/pause_buts"]
+margin_top = 10.0
+margin_right = 140.0
+margin_bottom = 70.0
+custom_constants/separation = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pause" type="Button" parent="tac_display/pause_buts/HBoxContainer"]
+margin_right = 62.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+disabled = true
+text = " || "
+
+[node name="resume" type="Button" parent="tac_display/pause_buts/HBoxContainer"]
+margin_left = 78.0
+margin_right = 140.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+text = " |> "
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 160.0
+margin_bottom = 80.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="res_list" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="list" type="VBoxContainer" parent="res_list"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 72.0
+margin_bottom = 48.0
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bits_label" type="Label" parent="res_list/list"]
+margin_right = 83.0
+margin_bottom = 14.0
+text = "<bits = 0>"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="energy_label" type="Label" parent="res_list/list"]
+margin_top = 24.0
+margin_right = 83.0
+margin_bottom = 38.0
+text = "<energy = 0>"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ram_label" type="Label" parent="res_list/list"]
+margin_top = 48.0
+margin_right = 83.0
+margin_bottom = 62.0
+text = "<RAM = 25>"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="value_changed" from="tac_display/build_menu/Units/HSlider" to="tac_display/build_menu/Units/HSlider" method="_on_HSlider_value_changed"]
+[connection signal="pressed" from="tac_display/pause_buts/HBoxContainer/pause" to="tac_display" method="_on_pause_pressed"]
+[connection signal="pressed" from="tac_display/pause_buts/HBoxContainer/resume" to="tac_display" method="_on_resume_pressed"]

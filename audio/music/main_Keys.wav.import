@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/main_Keys.wav-37b529d7e0837b5d41d57573b6ed55f5.sample"
+
+[deps]
+
+source_file="res://audio/music/main_Keys.wav"
+dest_files=[ "res://.import/main_Keys.wav-37b529d7e0837b5d41d57573b6ed55f5.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

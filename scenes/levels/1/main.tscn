@@ -1,0 +1,982 @@
+[gd_scene load_steps=46 format=2]
+
+[ext_resource path="res://audio/music/main_Keys.wav" type="AudioStream" id=1]
+[ext_resource path="res://audio/music/main_Bassline.wav" type="AudioStream" id=2]
+[ext_resource path="res://audio/music/main_Kick.wav" type="AudioStream" id=3]
+[ext_resource path="res://pngfind.com-circle-design-png-37199.png" type="Texture" id=4]
+[ext_resource path="res://scenes/entities/player.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/entities/units/enemies/AI_avatar.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/mixing-desk/music/containers/core_cont.gd" type="Script" id=11]
+[ext_resource path="res://addons/mixing-desk/music/song.gd" type="Script" id=12]
+[ext_resource path="res://addons/mixing-desk/music/mixing_desk_music.gd" type="Script" id=13]
+[ext_resource path="res://addons/shaderV/rgba/posterize.gd" type="Script" id=14]
+[ext_resource path="res://scenes/levels/1/main.gd" type="Script" id=15]
+[ext_resource path="res://addons/shaderV/rgba/noise/fractal/simplex4d_fractal.gd" type="Script" id=16]
+[ext_resource path="res://grid.png" type="Texture" id=17]
+
+[sub_resource type="VisualShaderNodeScalarConstant" id=1]
+constant = 0.3
+
+[sub_resource type="VisualShaderNodeScalarConstant" id=2]
+constant = 1.0
+
+[sub_resource type="VisualShaderNodeCustom" id=3]
+output_port_for_preview = 0
+default_input_values = [ 1, 8.0 ]
+script = ExtResource( 14 )
+
+[sub_resource type="VisualShaderNodeTexture" id=4]
+texture = ExtResource( 17 )
+
+[sub_resource type="VisualShaderNodeScalarOp" id=5]
+default_input_values = [ 0, 0.0, 1, 0.04 ]
+operator = 2
+
+[sub_resource type="VisualShaderNodeVectorOp" id=6]
+default_input_values = [ 0, Vector3( 0, 0, 0 ), 1, Vector3( 2, 2, 2 ) ]
+operator = 2
+
+[sub_resource type="VisualShaderNodeInput" id=7]
+input_name = "time"
+
+[sub_resource type="VisualShaderNodeCustom" id=8]
+output_port_for_preview = 0
+default_input_values = [ 1, 6, 2, Vector3( 2, 2, 0 ), 3, 2, 4, 0.8, 5, 0.5, 6, 0.6, 7, Vector3( 0.5, 0.5, 0 ), 8, 0, 9, 0 ]
+script = ExtResource( 16 )
+
+[sub_resource type="VisualShaderNodeScalarOp" id=9]
+default_input_values = [ 0, 0.0, 1, 0.003 ]
+operator = 2
+
+[sub_resource type="VisualShaderNodeInput" id=10]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeInput" id=11]
+input_name = "time"
+
+[sub_resource type="VisualShaderNodeScalarConstant" id=12]
+constant = 3.0
+
+[sub_resource type="VisualShaderNodeVec3Constant" id=13]
+constant = Vector3( 2, 1, 3 )
+
+[sub_resource type="VisualShaderNodeScalarConstant" id=14]
+constant = 2.0
+
+[sub_resource type="VisualShaderNodeScalarConstant" id=15]
+constant = 3.0
+
+[sub_resource type="VisualShaderNodeVec3Constant" id=16]
+constant = Vector3( 0.5, 0.5, 0 )
+
+[sub_resource type="VisualShader" id=17]
+code = "shader_type canvas_item;
+uniform sampler2D tex_frg_15;
+
+
+// FractalSimplexNoise4D
+
+vec4 _permute_4_s4_n0ise_fractal(vec4 x) {
+	return ((x * 34.0) + 1.0) * x - floor(((x * 34.0) + 1.0) * x * (1.0 / 289.0)) * 289.0;
+}
+float _permute_s4_n0ise_fractal(float x) {
+	return ((x * 34.0) + 1.0) * x - floor(((x * 34.0) + 1.0) * x * (1.0 / 289.0)) * 289.0;
+}
+vec4 _grad4_s4_n0ise_fractal(float j, vec4 ip) {
+	vec4 ones = vec4(1.0, 1.0, 1.0, -1.0);
+	vec4 p, s;
+	p.xyz = floor( fract (vec3(j) * ip.xyz) * 7.0) * ip.z - 1.0;
+	p.w = 1.5 - dot(abs(p.xyz), ones.xyz);
+	s = vec4(lessThan(p, vec4(0.0)));
+	p.xyz = p.xyz + (s.xyz*2.0 - 1.0) * s.www; 
+	return p;
+}
+float simplex4dN0iseFractalFunc(vec4 v) {
+	vec4 C = vec4( 0.138196601125011,
+				0.276393202250021,
+				0.414589803375032,
+				-0.447213595499958);
+	
+	vec4 i  = floor(v + dot(v, vec4(0.309016994374947451)) );
+	vec4 x0 = v -   i + dot(i, C.xxxx);
+	
+	vec4 i0;
+	vec3 isX = step( x0.yzw, x0.xxx );
+	vec3 isYZ = step( x0.zww, x0.yyz );
+	i0.x = isX.x + isX.y + isX.z;
+	i0.yzw = 1.0 - isX;
+	i0.y += isYZ.x + isYZ.y;
+	i0.zw += 1.0 - isYZ.xy;
+	i0.z += isYZ.z;
+	i0.w += 1.0 - isYZ.z;
+	
+	vec4 i3 = clamp( i0, 0.0, 1.0 );
+	vec4 i2 = clamp( i0-1.0, 0.0, 1.0 );
+	vec4 i1 = clamp( i0-2.0, 0.0, 1.0 );
+	
+	vec4 x1 = x0 - i1 + C.xxxx;
+	vec4 x2 = x0 - i2 + C.yyyy;
+	vec4 x3 = x0 - i3 + C.zzzz;
+	vec4 x4 = x0 + C.wwww;
+	
+	i = i - floor(i * (1.0 / 289.0)) * 289.0;
+	float j0 = _permute_s4_n0ise_fractal( _permute_s4_n0ise_fractal( _permute_s4_n0ise_fractal( _permute_s4_n0ise_fractal(i.w) + i.z) + i.y) + i.x);
+	vec4 j1 = _permute_4_s4_n0ise_fractal( _permute_4_s4_n0ise_fractal( _permute_4_s4_n0ise_fractal( _permute_4_s4_n0ise_fractal (
+				i.w + vec4(i1.w, i2.w, i3.w, 1.0 ))
+				+ i.z + vec4(i1.z, i2.z, i3.z, 1.0 ))
+				+ i.y + vec4(i1.y, i2.y, i3.y, 1.0 ))
+				+ i.x + vec4(i1.x, i2.x, i3.x, 1.0 ));
+	
+	vec4 ip = vec4(1.0/294.0, 1.0/49.0, 1.0/7.0, 0.0) ;
+	
+	vec4 p0 = _grad4_s4_n0ise_fractal(j0,   ip);
+	vec4 p1 = _grad4_s4_n0ise_fractal(j1.x, ip);
+	vec4 p2 = _grad4_s4_n0ise_fractal(j1.y, ip);
+	vec4 p3 = _grad4_s4_n0ise_fractal(j1.z, ip);
+	vec4 p4 = _grad4_s4_n0ise_fractal(j1.w, ip);
+	
+	vec4 norm = 2.79284291400159 - 1.85373472095314 * vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3));
+	p0 *= norm.x;
+	p1 *= norm.y;
+	p2 *= norm.z;
+	p3 *= norm.w;
+	p4 *= 2.79284291400159 - 1.85373472095314 * dot(p4,p4);
+	
+	vec3 m0 = max(0.6 - vec3(dot(x0,x0), dot(x1,x1), dot(x2,x2)), vec3(0.0));
+	vec2 m1 = max(0.6 - vec2(dot(x3,x3), dot(x4,x4)), vec2(0.0));
+	m0 = m0 * m0;
+	m1 = m1 * m1;
+	return 33.0 *(dot(m0*m0, vec3(dot(p0, x0), dot(p1, x1), dot(p2, x2)))
+				+ dot(m1*m1, vec2(dot(p3, x3), dot(p4, x4))));
+}
+float simplexNoise4DFBM(vec2 _uv_sn4fbm, int _oct_sn4fbm, vec2 _per_sn4fbm, float _lac_sn4fbm, float _persist_sn4fbm,
+				float _rot_sn4fbm, float _ampl_sn4fbm, vec2 _shift_sn4fbm, float _time_sn4fbm, float _z_sn4fbm) {
+	float _v = 0.0;
+	float _a = _ampl_sn4fbm;
+	mat2 _r0t = mat2(vec2(cos(_rot_sn4fbm), sin(_rot_sn4fbm)), vec2(-sin(_rot_sn4fbm), cos(_rot_sn4fbm)));
+	for (int i = 0; i < _oct_sn4fbm; ++i) {
+		_v += _a * simplex4dN0iseFractalFunc(vec4(_uv_sn4fbm * _per_sn4fbm, _time_sn4fbm, _z_sn4fbm));
+		_uv_sn4fbm = _r0t * _uv_sn4fbm * _lac_sn4fbm + _shift_sn4fbm;
+		_a *= _persist_sn4fbm;
+	}
+	return (min(_v, 1.0) + 1.0) * 0.5;
+}
+
+// Posterize
+
+vec3 p0ster1zeFunc(vec3 _col_p0sr1ze, float _steps_p0sterize){
+	return floor(_col_p0sr1ze * _steps_p0sterize) / (_steps_p0sterize - 1.0);
+}
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Input:3
+	vec3 n_out3p0 = vec3(UV, 0.0);
+
+// Scalar:5
+	float n_out5p0 = 3.000000;
+
+// Vector:6
+	vec3 n_out6p0 = vec3(2.000000, 1.000000, 3.000000);
+
+// Scalar:7
+	float n_out7p0 = 2.000000;
+
+// Scalar:8
+	float n_out8p0 = 3.000000;
+
+// Input:19
+	float n_out19p0 = TIME;
+
+// ScalarOp:20
+	float n_in20p1 = 0.00300;
+	float n_out20p0 = n_out19p0 * n_in20p1;
+
+// Scalar:11
+	float n_out11p0 = 0.300000;
+
+// Vector:9
+	vec3 n_out9p0 = vec3(0.500000, 0.500000, 0.000000);
+
+// Scalar:12
+	float n_out12p0 = 1.000000;
+
+// Input:4
+	float n_out4p0 = TIME;
+
+// ScalarOp:17
+	float n_in17p1 = 0.04000;
+	float n_out17p0 = n_out4p0 * n_in17p1;
+
+// FractalSimplexNoise4D:2
+	float n_out2p0;
+	{
+		n_out2p0 = simplexNoise4DFBM(n_out3p0.xy, int(n_out5p0), n_out6p0.xy, n_out7p0, n_out8p0, n_out20p0, n_out11p0, n_out9p0.xy, n_out17p0, n_out12p0);
+	}
+
+// Posterize:13
+	float n_in13p1 = 8.00000;
+	vec3 n_out13p0;
+	{
+		n_out13p0 = p0ster1zeFunc(vec3(n_out2p0), n_in13p1);
+	}
+
+// VectorOp:18
+	vec3 n_in18p1 = vec3(2.00000, 2.00000, 2.00000);
+	vec3 n_out18p0 = n_out13p0 * n_in18p1;
+
+// Texture:15
+	vec4 tex_frg_15_read = texture(tex_frg_15, UV.xy);
+	vec3 n_out15p0 = tex_frg_15_read.rgb;
+	float n_out15p1 = tex_frg_15_read.a;
+
+// Output:0
+	COLOR.rgb = n_out18p0;
+	COLOR.a = n_out15p1;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( 197, -48 )
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2( 1080, 160 )
+nodes/fragment/2/node = SubResource( 8 )
+nodes/fragment/2/position = Vector2( 200, 200 )
+nodes/fragment/3/node = SubResource( 10 )
+nodes/fragment/3/position = Vector2( 0, 0 )
+nodes/fragment/4/node = SubResource( 11 )
+nodes/fragment/4/position = Vector2( -140, 580 )
+nodes/fragment/5/node = SubResource( 12 )
+nodes/fragment/5/position = Vector2( -40, 60 )
+nodes/fragment/6/node = SubResource( 13 )
+nodes/fragment/6/position = Vector2( -180, 120 )
+nodes/fragment/7/node = SubResource( 14 )
+nodes/fragment/7/position = Vector2( -40, 200 )
+nodes/fragment/8/node = SubResource( 15 )
+nodes/fragment/8/position = Vector2( -40, 260 )
+nodes/fragment/9/node = SubResource( 16 )
+nodes/fragment/9/position = Vector2( -180, 440 )
+nodes/fragment/11/node = SubResource( 1 )
+nodes/fragment/11/position = Vector2( -40, 380 )
+nodes/fragment/12/node = SubResource( 2 )
+nodes/fragment/12/position = Vector2( -40, 520 )
+nodes/fragment/13/node = SubResource( 3 )
+nodes/fragment/13/position = Vector2( 580, 220 )
+nodes/fragment/15/node = SubResource( 4 )
+nodes/fragment/15/position = Vector2( 540, -40 )
+nodes/fragment/17/node = SubResource( 5 )
+nodes/fragment/17/position = Vector2( 60, 600 )
+nodes/fragment/18/node = SubResource( 6 )
+nodes/fragment/18/position = Vector2( 840, 200 )
+nodes/fragment/19/node = SubResource( 7 )
+nodes/fragment/19/position = Vector2( -240, 240 )
+nodes/fragment/20/node = SubResource( 9 )
+nodes/fragment/20/position = Vector2( -240, 300 )
+nodes/fragment/connections = PoolIntArray( 3, 0, 2, 0, 7, 0, 2, 3, 5, 0, 2, 1, 6, 0, 2, 2, 8, 0, 2, 4, 11, 0, 2, 6, 9, 0, 2, 7, 12, 0, 2, 8, 2, 0, 13, 0, 15, 1, 0, 1, 4, 0, 17, 0, 17, 0, 2, 9, 13, 0, 18, 0, 18, 0, 0, 0, 19, 0, 20, 0, 20, 0, 2, 5 )
+
+[sub_resource type="ShaderMaterial" id=18]
+shader = SubResource( 17 )
+
+[sub_resource type="Environment" id=19]
+background_mode = 4
+tonemap_mode = 3
+glow_enabled = true
+glow_intensity = 5.4
+glow_strength = 1.06
+glow_bloom = 0.03
+glow_blend_mode = 0
+glow_hdr_threshold = 0.74
+glow_hdr_luminance_cap = 0.1
+glow_hdr_scale = 0.85
+glow_bicubic_upscale = true
+adjustment_enabled = true
+adjustment_brightness = 0.91
+adjustment_contrast = 1.36
+adjustment_saturation = 1.81
+
+[sub_resource type="RectangleShape2D" id=20]
+
+[sub_resource type="CircleShape2D" id=21]
+radius = 40.0
+
+[sub_resource type="Gradient" id=22]
+offsets = PoolRealArray( 0, 0.544218, 1 )
+colors = PoolColorArray( 0, 0, 0, 0, 0.545098, 0.545098, 0.545098, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=23]
+gradient = SubResource( 22 )
+
+[sub_resource type="Curve" id=24]
+max_value = 2.0
+_data = [ Vector2( 0, 0 ), 0.0, 5.32457, 0, 0, Vector2( 1, 2 ), 0.342459, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=25]
+curve = SubResource( 24 )
+
+[sub_resource type="ParticlesMaterial" id=26]
+emission_shape = 2
+emission_box_extents = Vector3( 140, 140, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 7.0
+initial_velocity_random = 1.0
+angular_velocity = 76.6
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 720.0
+angle_random = 1.0
+scale = 2.0
+scale_random = 1.0
+scale_curve = SubResource( 25 )
+color_ramp = SubResource( 23 )
+
+[sub_resource type="Curve" id=27]
+max_value = 2.0
+_data = [ Vector2( 0, 0 ), 0.0, 6.18182, 0, 0, Vector2( 1, 2 ), 0.98116, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=28]
+curve = SubResource( 27 )
+
+[sub_resource type="ParticlesMaterial" id=29]
+emission_shape = 2
+emission_box_extents = Vector3( 70, 70, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 32.91
+initial_velocity_random = 1.0
+angular_velocity = 61.28
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 720.0
+angle_random = 1.0
+scale = 3.0
+scale_random = 1.0
+scale_curve = SubResource( 28 )
+color_ramp = SubResource( 23 )
+
+[sub_resource type="Curve" id=30]
+max_value = 2.0
+_data = [ Vector2( 0.0117647, 0.113636 ), 0.0, 3.83699, 0, 0, Vector2( 0.988235, 2 ), 0.597944, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=31]
+curve = SubResource( 30 )
+
+[sub_resource type="ParticlesMaterial" id=32]
+emission_shape = 2
+emission_box_extents = Vector3( 35, 35, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 43.55
+initial_velocity_random = 1.0
+angular_velocity = 61.28
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 720.0
+angle_random = 1.0
+scale = 4.0
+scale_random = 1.0
+scale_curve = SubResource( 31 )
+color_ramp = SubResource( 23 )
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 15 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+scale = Vector2( 0.5, 0.5 )
+transform = Transform2D( 0.5, 0, 0, 0.5, 0, 0 )
+follow_viewport_scale = 0.001
+scroll_ignore_camera_zoom = true
+
+[node name="gridfar" type="ParallaxLayer" parent="ParallaxBackground"]
+modulate = Color( 0.352941, 0.960784, 0.960784, 0.592157 )
+motion_scale = Vector2( 0.3, 0.3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="grid" type="Node2D" parent="ParallaxBackground/gridfar"]
+modulate = Color( 2, 2, 2, 0.0666667 )
+position = Vector2( -7885.3, -6224.56 )
+
+[node name="1" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 1870, -1154 )
+texture = ExtResource( 17 )
+
+[node name="2" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 3770, -1154 )
+texture = ExtResource( 17 )
+
+[node name="3" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 1872, 744 )
+texture = ExtResource( 17 )
+
+[node name="4" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 3770, 744 )
+texture = ExtResource( 17 )
+
+[node name="5" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 5668.11, -1153.74 )
+texture = ExtResource( 17 )
+
+[node name="6" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 7568.11, -1153.74 )
+texture = ExtResource( 17 )
+
+[node name="7" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 5670.11, 744.265 )
+texture = ExtResource( 17 )
+
+[node name="8" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 7568.11, 744.265 )
+texture = ExtResource( 17 )
+
+[node name="9" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 1871.39, 2643.4 )
+texture = ExtResource( 17 )
+
+[node name="10" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 3771.39, 2643.4 )
+texture = ExtResource( 17 )
+
+[node name="11" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 1873.39, 4541.4 )
+texture = ExtResource( 17 )
+
+[node name="12" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 3771.39, 4541.4 )
+texture = ExtResource( 17 )
+
+[node name="13" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 5669.5, 2643.67 )
+texture = ExtResource( 17 )
+
+[node name="14" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 7569.5, 2643.67 )
+texture = ExtResource( 17 )
+
+[node name="15" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 5671.5, 4541.67 )
+texture = ExtResource( 17 )
+
+[node name="16" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 7569.5, 4541.67 )
+texture = ExtResource( 17 )
+
+[node name="17" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 9465.82, -1153.96 )
+texture = ExtResource( 17 )
+
+[node name="18" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 11365.8, -1153.96 )
+texture = ExtResource( 17 )
+
+[node name="19" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 9467.82, 744.041 )
+texture = ExtResource( 17 )
+
+[node name="20" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 11365.8, 744.041 )
+texture = ExtResource( 17 )
+
+[node name="21" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 13263.9, -1153.69 )
+texture = ExtResource( 17 )
+
+[node name="22" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 15163.9, -1153.69 )
+texture = ExtResource( 17 )
+
+[node name="23" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 13265.9, 744.305 )
+texture = ExtResource( 17 )
+
+[node name="24" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 15163.9, 744.305 )
+texture = ExtResource( 17 )
+
+[node name="25" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 9467.21, 2643.44 )
+texture = ExtResource( 17 )
+
+[node name="26" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 11367.2, 2643.44 )
+texture = ExtResource( 17 )
+
+[node name="27" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 9469.21, 4541.44 )
+texture = ExtResource( 17 )
+
+[node name="28" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 11367.2, 4541.44 )
+texture = ExtResource( 17 )
+
+[node name="29" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 13265.3, 2643.71 )
+texture = ExtResource( 17 )
+
+[node name="30" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 15165.3, 2643.71 )
+texture = ExtResource( 17 )
+
+[node name="31" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 13267.3, 4541.71 )
+texture = ExtResource( 17 )
+
+[node name="32" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 15165.3, 4541.71 )
+texture = ExtResource( 17 )
+
+[node name="33" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 1873.54, 6440.05 )
+texture = ExtResource( 17 )
+
+[node name="34" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 3773.54, 6440.05 )
+texture = ExtResource( 17 )
+
+[node name="35" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 1875.54, 8338.05 )
+texture = ExtResource( 17 )
+
+[node name="36" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 3773.54, 8338.05 )
+texture = ExtResource( 17 )
+
+[node name="37" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 5671.65, 6440.31 )
+texture = ExtResource( 17 )
+
+[node name="38" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 7571.65, 6440.31 )
+texture = ExtResource( 17 )
+
+[node name="39" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 5673.65, 8338.31 )
+texture = ExtResource( 17 )
+
+[node name="40" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 7571.65, 8338.31 )
+texture = ExtResource( 17 )
+
+[node name="41" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 1874.93, 10237.4 )
+texture = ExtResource( 17 )
+
+[node name="42" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 3774.93, 10237.4 )
+texture = ExtResource( 17 )
+
+[node name="43" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 1876.93, 12135.4 )
+texture = ExtResource( 17 )
+
+[node name="44" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 3774.93, 12135.4 )
+texture = ExtResource( 17 )
+
+[node name="45" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 5673.04, 10237.7 )
+texture = ExtResource( 17 )
+
+[node name="46" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 7573.04, 10237.7 )
+texture = ExtResource( 17 )
+
+[node name="47" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 5675.04, 12135.7 )
+texture = ExtResource( 17 )
+
+[node name="48" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 7573.04, 12135.7 )
+texture = ExtResource( 17 )
+
+[node name="49" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 9469.37, 6440.09 )
+texture = ExtResource( 17 )
+
+[node name="50" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 11369.4, 6440.09 )
+texture = ExtResource( 17 )
+
+[node name="51" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 9471.37, 8338.09 )
+texture = ExtResource( 17 )
+
+[node name="52" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 11369.4, 8338.09 )
+texture = ExtResource( 17 )
+
+[node name="53" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 13267.5, 6440.35 )
+texture = ExtResource( 17 )
+
+[node name="54" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 15167.5, 6440.35 )
+texture = ExtResource( 17 )
+
+[node name="55" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 13269.5, 8338.35 )
+texture = ExtResource( 17 )
+
+[node name="56" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 15167.5, 8338.35 )
+texture = ExtResource( 17 )
+
+[node name="57" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 9470.76, 10237.5 )
+texture = ExtResource( 17 )
+
+[node name="58" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 11370.8, 10237.5 )
+texture = ExtResource( 17 )
+
+[node name="59" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 9472.76, 12135.5 )
+texture = ExtResource( 17 )
+
+[node name="60" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 11370.8, 12135.5 )
+texture = ExtResource( 17 )
+
+[node name="61" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 13268.9, 10237.8 )
+texture = ExtResource( 17 )
+
+[node name="62" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 15168.9, 10237.8 )
+texture = ExtResource( 17 )
+
+[node name="63" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 13270.9, 12135.8 )
+texture = ExtResource( 17 )
+
+[node name="64" type="Sprite" parent="ParallaxBackground/gridfar/grid"]
+material = SubResource( 18 )
+position = Vector2( 15168.9, 12135.8 )
+texture = ExtResource( 17 )
+
+[node name="gridmed" type="ParallaxLayer" parent="ParallaxBackground"]
+modulate = Color( 0.627451, 0.352941, 0.952941, 0.819608 )
+motion_scale = Vector2( 0.4, 0.4 )
+
+[node name="grid" type="Node2D" parent="ParallaxBackground/gridmed"]
+modulate = Color( 2, 2, 2, 0.23 )
+position = Vector2( -7936.23, -5605.35 )
+scale = Vector2( 3, 3 )
+
+[node name="1" type="Sprite" parent="ParallaxBackground/gridmed/grid"]
+material = SubResource( 18 )
+texture = ExtResource( 17 )
+
+[node name="2" type="Sprite" parent="ParallaxBackground/gridmed/grid"]
+material = SubResource( 18 )
+position = Vector2( 1900, 0 )
+texture = ExtResource( 17 )
+
+[node name="3" type="Sprite" parent="ParallaxBackground/gridmed/grid"]
+material = SubResource( 18 )
+position = Vector2( 0, 1900 )
+texture = ExtResource( 17 )
+
+[node name="4" type="Sprite" parent="ParallaxBackground/gridmed/grid"]
+material = SubResource( 18 )
+position = Vector2( 1900, 1900 )
+texture = ExtResource( 17 )
+
+[node name="5" type="Sprite" parent="ParallaxBackground/gridmed/grid"]
+material = SubResource( 18 )
+position = Vector2( 3798.87, -0.259766 )
+texture = ExtResource( 17 )
+
+[node name="6" type="Sprite" parent="ParallaxBackground/gridmed/grid"]
+material = SubResource( 18 )
+position = Vector2( 3798.87, 1899.74 )
+texture = ExtResource( 17 )
+
+[node name="7" type="Sprite" parent="ParallaxBackground/gridmed/grid"]
+material = SubResource( 18 )
+position = Vector2( 5698.34, -0.640747 )
+texture = ExtResource( 17 )
+
+[node name="8" type="Sprite" parent="ParallaxBackground/gridmed/grid"]
+material = SubResource( 18 )
+position = Vector2( 5698.34, 1899.36 )
+texture = ExtResource( 17 )
+
+[node name="9" type="Sprite" parent="ParallaxBackground/gridmed/grid"]
+material = SubResource( 18 )
+position = Vector2( 0.224609, 3798.4 )
+texture = ExtResource( 17 )
+
+[node name="10" type="Sprite" parent="ParallaxBackground/gridmed/grid"]
+material = SubResource( 18 )
+position = Vector2( 1900.22, 3798.4 )
+texture = ExtResource( 17 )
+
+[node name="11" type="Sprite" parent="ParallaxBackground/gridmed/grid"]
+material = SubResource( 18 )
+position = Vector2( 3799.09, 3798.14 )
+texture = ExtResource( 17 )
+
+[node name="12" type="Sprite" parent="ParallaxBackground/gridmed/grid"]
+material = SubResource( 18 )
+position = Vector2( 5698.57, 3797.76 )
+texture = ExtResource( 17 )
+
+[node name="gridclose" type="ParallaxLayer" parent="ParallaxBackground"]
+modulate = Color( 0.45098, 0.396078, 0.964706, 1 )
+motion_scale = Vector2( 0.5, 0.5 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="grid" type="Node2D" parent="ParallaxBackground/gridclose"]
+modulate = Color( 2, 2, 2, 0.23 )
+position = Vector2( -8327.28, -10573.9 )
+scale = Vector2( 5, 5 )
+
+[node name="1" type="Sprite" parent="ParallaxBackground/gridclose/grid"]
+material = SubResource( 18 )
+texture = ExtResource( 17 )
+
+[node name="2" type="Sprite" parent="ParallaxBackground/gridclose/grid"]
+material = SubResource( 18 )
+position = Vector2( 1900, 0 )
+texture = ExtResource( 17 )
+
+[node name="10" type="Sprite" parent="ParallaxBackground/gridclose/grid"]
+material = SubResource( 18 )
+position = Vector2( 3798.86, 0.429565 )
+texture = ExtResource( 17 )
+
+[node name="3" type="Sprite" parent="ParallaxBackground/gridclose/grid"]
+material = SubResource( 18 )
+position = Vector2( 0, 1900 )
+texture = ExtResource( 17 )
+
+[node name="4" type="Sprite" parent="ParallaxBackground/gridclose/grid"]
+material = SubResource( 18 )
+position = Vector2( 1900, 1900 )
+texture = ExtResource( 17 )
+
+[node name="5" type="Sprite" parent="ParallaxBackground/gridclose/grid"]
+visible = false
+material = SubResource( 18 )
+position = Vector2( 3798.67, 0 )
+texture = ExtResource( 17 )
+
+[node name="6" type="Sprite" parent="ParallaxBackground/gridclose/grid"]
+material = SubResource( 18 )
+position = Vector2( 3799.33, 1900 )
+texture = ExtResource( 17 )
+
+[node name="7" type="Sprite" parent="ParallaxBackground/gridclose/grid"]
+material = SubResource( 18 )
+position = Vector2( -49.4849, 3798.82 )
+texture = ExtResource( 17 )
+
+[node name="8" type="Sprite" parent="ParallaxBackground/gridclose/grid"]
+material = SubResource( 18 )
+position = Vector2( 1850.52, 3798.82 )
+texture = ExtResource( 17 )
+
+[node name="9" type="Sprite" parent="ParallaxBackground/gridclose/grid"]
+material = SubResource( 18 )
+position = Vector2( 3749.85, 3798.82 )
+texture = ExtResource( 17 )
+
+[node name="Tween" type="Tween" parent="ParallaxBackground"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 19 )
+
+[node name="player" parent="." instance=ExtResource( 6 )]
+position = Vector2( -879.918, 101.259 )
+speed = 12
+max_hp = 500.0
+
+[node name="select_box" type="ColorRect" parent="."]
+pause_mode = 2
+margin_right = 40.0
+margin_bottom = 40.0
+color = Color( 0.701961, 0.678431, 0.0980392, 0.482353 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="area" type="Area2D" parent="select_box"]
+position = Vector2( 20, 20 )
+monitoring = false
+monitorable = false
+
+[node name="shape" type="CollisionShape2D" parent="select_box/area"]
+shape = SubResource( 20 )
+
+[node name="units" type="Node2D" parent="."]
+
+[node name="friendly" type="Node2D" parent="units"]
+
+[node name="hostile" type="Node2D" parent="units"]
+
+[node name="avatar" parent="units/hostile" instance=ExtResource( 7 )]
+
+[node name="neutral" type="Node2D" parent="units"]
+
+[node name="build_pos" type="Position2D" parent="."]
+
+[node name="Area" type="Area2D" parent="build_pos"]
+collision_layer = 3
+collision_mask = 3
+
+[node name="Shape" type="CollisionShape2D" parent="build_pos/Area"]
+shape = SubResource( 21 )
+
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
+layer = 1
+
+[node name="spots_far" type="ParallaxLayer" parent="ParallaxBackground2"]
+modulate = Color( 1, 1, 1, 0.913725 )
+motion_scale = Vector2( 1.1, 1.1 )
+
+[node name="Particles2D" type="Particles2D" parent="ParallaxBackground2/spots_far"]
+scale = Vector2( 100, 100 )
+amount = 1000
+lifetime = 10.0
+preprocess = 30.0
+speed_scale = 0.2
+visibility_rect = Rect2( -30000, -30000, 60000, 60000 )
+draw_order = 1
+process_material = SubResource( 26 )
+
+[node name="spots_med" type="ParallaxLayer" parent="ParallaxBackground2"]
+modulate = Color( 1, 1, 1, 0.682353 )
+motion_scale = Vector2( 1.5, 1.5 )
+
+[node name="Particles2D" type="Particles2D" parent="ParallaxBackground2/spots_med"]
+scale = Vector2( 200, 200 )
+amount = 800
+lifetime = 20.0
+preprocess = 30.0
+speed_scale = 0.2
+visibility_rect = Rect2( -30000, -30000, 60000, 60000 )
+draw_order = 1
+process_material = SubResource( 29 )
+
+[node name="spots_close" type="ParallaxLayer" parent="ParallaxBackground2"]
+modulate = Color( 1, 1, 1, 0.396078 )
+motion_scale = Vector2( 2, 2 )
+
+[node name="Particles2D" type="Particles2D" parent="ParallaxBackground2/spots_close"]
+scale = Vector2( 300, 300 )
+amount = 600
+lifetime = 30.0
+preprocess = 30.0
+speed_scale = 0.2
+visibility_rect = Rect2( -30000, -30000, 60000, 60000 )
+draw_order = 1
+process_material = SubResource( 32 )
+
+[node name="MixingDeskMusic" type="Node" parent="."]
+script = ExtResource( 13 )
+play_mode = 1
+
+[node name="main" type="Node" parent="MixingDeskMusic"]
+script = ExtResource( 12 )
+tempo = 120
+bars = 4
+beats_in_bar = 4
+
+[node name="CoreContainer" type="Node" parent="MixingDeskMusic/main"]
+script = ExtResource( 11 )
+
+[node name="kick" type="AudioStreamPlayer" parent="MixingDeskMusic/main/CoreContainer"]
+stream = ExtResource( 3 )
+
+[node name="bassline" type="AudioStreamPlayer" parent="MixingDeskMusic/main/CoreContainer"]
+stream = ExtResource( 2 )
+
+[node name="keys" type="AudioStreamPlayer" parent="MixingDeskMusic/main/CoreContainer"]
+stream = ExtResource( 1 )
+
+[node name="mp" type="Sprite" parent="."]
+visible = false
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+
+[connection signal="beat" from="MixingDeskMusic" to="." method="_on_MixingDeskMusic_beat"]
